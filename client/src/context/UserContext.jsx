@@ -1,0 +1,69 @@
+import { createContext, useContext, useState } from 'react';
+
+const UserContext = createContext();
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUser debe usarse dentro de un UserProvider');
+  }
+  return context;
+};
+
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [email, setEmail] = useState(localStorage.getItem('email'));
+
+  const register = (name, userEmail, password) => {
+    const newUser = { id: Date.now(), name, email: userEmail, password };
+    const fakeToken = `token_${Date.now()}`;
+    setUsers((prev) => [...prev, newUser]);
+    setUser(newUser);
+    setToken(fakeToken);
+    setEmail(userEmail);
+    localStorage.setItem('token', fakeToken);
+    localStorage.setItem('email', userEmail);
+    return newUser;
+  };
+
+  const auth = (userEmail, password) => {
+    const found = users.find((u) => u.email === userEmail && u.password === password);
+    if (found) {
+      const fakeToken = `token_${Date.now()}`;
+      setUser(found);
+      setToken(fakeToken);
+      setEmail(found.email);
+      localStorage.setItem('token', fakeToken);
+      localStorage.setItem('email', found.email);
+      return found;
+    }
+    return null;
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    setToken(null);
+    setEmail(null);
+    setUser(null);
+  };
+
+  const getProfile = () => {
+    return user;
+  };
+
+  const stateGlobal = {
+    token,
+    logout,
+    auth,
+    register,
+    email,
+    getProfile
+  };
+
+  return <UserContext.Provider value={stateGlobal}>{children}</UserContext.Provider>;
+};
+
+export default UserContext;
