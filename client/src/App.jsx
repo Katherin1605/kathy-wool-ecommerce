@@ -13,7 +13,7 @@ function App() {
     <UserProvider>
       <BrowserRouter>
       <Navbar />
-      <div className="container mt-4"></div>
+      <main className="main-container">
       
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,7 +23,7 @@ function App() {
           {/* <Route path="/products/:id" element={<ProductDetails />} /> */}
           {/* <Route path="/cart" element={<Cart />} /> */}
         </Routes>
-        <div/>
+        </main>
         <Footer />
   
       </BrowserRouter>

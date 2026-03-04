@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom"
+import { RiShoppingBag3Line } from "react-icons/ri";
 
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm px-4">
 
-      <Link className="navbar-brand fw-bold text-pink" to="/">
+      <Link className="navbar-brand fw-bold text-pink d-flex flex-row" to="/">
+      <div className="logo-icon d-flex align-items-center justify-content-center me-2">
+      <RiShoppingBag3Line />
+      </div>
         kathyWool
       </Link>
 
