@@ -1,5 +1,5 @@
 import Hero from "../components/Hero"
-import { HiOutlineHeart } from "react-icons/hi2";
+import { HiOutlineHeart, HiOutlineSparkles, HiOutlineShoppingCart } from "react-icons/hi2";
 
 function Home() {
 
@@ -24,19 +24,23 @@ function Home() {
                     <HiOutlineHeart />
                     </div>
                     <h4>Hecho a Mano</h4>
-                    <p>Cada pieza es creada con dedicación artesanal.</p>
+                    <p>Cada pieza es única y elaborada con cuidado artesanal</p>
                 </div>
 
                 <div className="feature">
-                    <span className="feature-icon">⭐</span>
+                    <div className="feature-icon">
+                    <HiOutlineSparkles />
+                    </div>
                     <h4>Calidad Premium</h4>
-                    <p>Materiales seleccionados para máxima durabilidad.</p>
+                    <p>Utilizamos lanas y materiales de la más alta calidad</p>
                 </div>
 
                 <div className="feature">
-                    <span className="feature-icon">🚚</span>
+                    <div className="feature-icon">
+                    <HiOutlineShoppingCart />
+                    </div>
                     <h4>Envío Seguro</h4>
-                    <p>Empaque especial para proteger cada producto.</p>
+                    <p>Empaque cuidadoso para que tu producto llegue perfecto.</p>
                 </div>
 
             </section>
