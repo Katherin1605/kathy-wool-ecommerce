@@ -1,4 +1,4 @@
-import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductCard = (props) => {
     const { nombre, precio, imagen, estrellas } = props
@@ -6,13 +6,13 @@ const ProductCard = (props) => {
     const colorFondo = '#f8f9fa';
     return (
         <div className='m-3'>
-            <div className="card" style={{ width: '18rem', height: '100%', backgroundColor: colorFondo }}>
-                <img src={imagen} className="card-img-top" alt={nombre} />
+            <div className="card" style={{ width: '18rem', height: '100%', backgroundColor: colorFondo, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                <img src={imagen} className="card-img-top" alt={nombre} style={{height: '300px', overflow: 'scroll'}}/>
                 <div className="card-body">
                     <h5 className="card-title">{nombre}</h5>
                     <div className='row d-flex align-items-center mb-3'>
                         <div className='col p-2'>
-                            <p className="card-text" style={{color: colorRosa, fontWeight: 'bold'}}>${precio.toFixed(2)}</p>
+                            <p className="card-text" style={{color: colorRosa, fontWeight: 'bold'}}>${precio}</p>
                         </div>
                         <div className='col'>
                             <p className="card-text">{
@@ -28,6 +28,11 @@ const ProductCard = (props) => {
                     className="btn btn-danger border border-0 "
                     style={{width: '100%', fontWeight: 'bold', color: 'white', backgroundColor: colorRosa}}>
                         &#x1F6D2; Agregar al Carrito
+                    </button>
+                    <button type="button"
+                    className="btn btn-secondary border border-0 "
+                    style={{width: '100%', fontWeight: 'bold', color: 'white', marginTop: '10px'}}>
+                        Ver detalles
                     </button>
                 </div>
             </div>
