@@ -6,7 +6,7 @@ const ProductCard = (props) => {
     const colorFondo = '#f8f9fa';
     return (
         <div className='m-3'>
-            <div className="card" style={{ width: '18rem', backgroundColor: colorFondo }}>
+            <div className="card" style={{ width: '18rem', height: '100%', backgroundColor: colorFondo }}>
                 <img src={imagen} className="card-img-top" alt={nombre} />
                 <div className="card-body">
                     <h5 className="card-title">{nombre}</h5>

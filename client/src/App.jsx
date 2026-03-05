@@ -1,13 +1,22 @@
-import React from 'react'
-import ProductCard from './components/ProductCard'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { UserProvider } from './context/UserContext'
+import Register from './pages/Register'
+import Login from './pages/Login'
 
+
+//<Route path="/login" element={<Login />} />
 function App() {
- 
-
   return (
-    <>
-      <ProductCard nombre="Axolote" precio={19.99} imagen="axolote.png" estrellas={4} />
-    </>
+    <UserProvider>
+      <BrowserRouter>
+      
+        <Routes>
+           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+  
+      </BrowserRouter>
+    </UserProvider>
   )
 }
 
