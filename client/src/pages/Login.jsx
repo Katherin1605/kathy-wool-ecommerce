@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+const API_URL = 'https://69a9119832e2d46caf45190f.mockapi.io/api/v1/users';
 
 const Login = () => {
   const { auth } = useUser();
@@ -14,7 +17,7 @@ const Login = () => {
   const pinkColor = '#f52a8f';
   const bgColor = '#fdf6f9';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -23,11 +26,16 @@ const Login = () => {
       return;
     }
 
-    const user = auth(email, password);
-    if (user) {
-      navigate('/');
-    } else {
-      setError('Correo o contraseña incorrectos');
+    try {
+      const { data } = await axios.get(API_URL, { params: { email, password } });
+      if (data.length > 0) {
+        auth(email, password);
+        navigate('/');
+      } else {
+        setError('Correo o contraseña incorrectos');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error al iniciar sesión. Intenta de nuevo.');
     }
   };
 
