@@ -35,8 +35,8 @@ const Registro = () => {
     }
 
     try {
-      const { data } = await axios.post(API_URL, { name, email, password });
-      register(data.name, data.email, data.password);
+      const { data } = await axios.post(API_URL, { name, email, password, role: 'Cliente' });
+      register(data.name, data.email, data.password, data.role);
       setSuccess(`¡Bienvenido/a ${data.name}! Cuenta creada exitosamente.`);
       setTimeout(() => navigate('/'), 1500);
       setName('');

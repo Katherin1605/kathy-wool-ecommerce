@@ -29,8 +29,13 @@ const Login = () => {
     try {
       const { data } = await axios.get(API_URL, { params: { email, password } });
       if (data.length > 0) {
-        auth(email, password);
-        navigate('/');
+        const user = data[0];
+        auth(user);
+        if (user.role === 'Administrador') {
+          navigate('/administrador');
+        } else {
+          navigate('/home');
+        }
       } else {
         setError('Correo o contraseña incorrectos');
       }
