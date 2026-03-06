@@ -25,7 +25,7 @@ function Navbar() {
         </NavLink>
 
         <NavLink className="btn-primary" to="/register">
-          Registrarse
+          Registrarse 
         </NavLink>
 
       </div>
