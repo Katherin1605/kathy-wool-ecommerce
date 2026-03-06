@@ -7,7 +7,6 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 
 
-//<Route path="/login" element={<Login />} />
 function App() {
   return (
     <UserProvider>

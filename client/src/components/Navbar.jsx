@@ -1,32 +1,32 @@
-import { Link } from "react-router-dom"
-import { RiShoppingBag3Line } from "react-icons/ri";
+import { NavLink } from "react-router-dom"
+
 
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm px-4">
 
-      <Link className="navbar-brand fw-bold text-pink d-flex flex-row" to="/">
+      <NavLink className="navbar-brand fw-bold text-pink d-flex flex-row flex-start" to="/">
       <div className="logo-icon d-flex align-items-center justify-content-center me-2">
-      <RiShoppingBag3Line />
+      <i class="bi bi-shop"></i>
       </div>
-        kathyWool
-      </Link>
+        <h4>kathyWool</h4>
+      </NavLink>
 
-      <div className="navbar-nav mx-auto">
-        <Link className="nav-link" to="/">Inicio</Link>
-        <Link className="nav-link" to="/products">Productos</Link>
-        <Link className="nav-link" to="/contact">Contacto</Link>
+      <div className="navbar-nav mx-auto d-flex gap-4 align-items-center">
+        <NavLink className={({ isActive }) => isActive ? 'active' : 'nav-link'} to="/">Inicio</NavLink>
+        <NavLink className={({ isActive }) => isActive ? 'active' : 'nav-link'} to="/products">Productos</NavLink>
+        <NavLink className={({ isActive }) => isActive ? 'active' : 'nav-link'} to="/contact">Contacto</NavLink>
       </div>
 
-      <div className="d-flex gap-3">
+      <div className="d-flex gap-3 align-items-center">
 
-        <Link className="btn" to="/login">
+        <NavLink className="btn" to="/login">
           Iniciar sesión
-        </Link>
+        </NavLink>
 
-        <Link className="btn-primary" to="/register">
+        <NavLink className="btn-primary" to="/register">
           Registrarse
-        </Link>
+        </NavLink>
 
       </div>
 

@@ -13,7 +13,7 @@ function Hero() {
 
                 <button onClick={() => window.location.href = "/products"}
                     className="btn-primary">
-                    Explorar Galería
+                    <i className="bi bi-stars"></i> Explorar Galería
                 </button>
 
             </div>
