@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import { UserProvider } from './context/UserContext'
 
 import MainLayout from './layouts/MainLayout'
@@ -12,16 +13,20 @@ import UserLayout from './layouts/UserLayout'
 // import MyOrders from './components/MyOrders'
 // import MyFavorites from './components/MyFavorites'
 
+import { CartProvider } from './context/CartContext'
+
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Home from './pages/Home'
+import Products from './pages/Products'
+import Cart from './pages/Cart'
 
 
 function App() {
   return (
     <UserProvider>
       <BrowserRouter>
-
+      <CartProvider>
         <Routes>
 
           {/* Rutas públicas */}
@@ -31,7 +36,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             {/* <Route path="/products" element={<Products />} /> */}
             {/* <Route path="/products/:id" element={<ProductDetails />} /> */}
-            {/* <Route path="/cart" element={<Cart />} /> */}
+            <Route path="/cart" element={<Cart />} />
           </Route>
 
           {/* Rutas protegidas para admin */}
@@ -60,7 +65,7 @@ function App() {
           {/* NOT FOUND */}
           {/* <Route path="*" element={<Home />} /> */}
         </Routes>
-
+      </CartProvider>
       </BrowserRouter>
     </UserProvider>
   )
