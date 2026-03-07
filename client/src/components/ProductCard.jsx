@@ -17,7 +17,8 @@ const ProductCard = (props) => {
         addToCart({
             id: id,
             name: name,
-            price: price
+            price: price,
+            image: image
         });
     };
     
