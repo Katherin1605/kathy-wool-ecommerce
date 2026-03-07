@@ -21,14 +21,31 @@ const Cart = () => {
         ) : (
             <>
             {cart.map((item) => (
+                
                 <div
                 key={item.id}
                 className="d-flex justify-content-between align-items-center border-bottom py-3"
                 >
-                <div>
-                    <h5>{item.name}</h5>
-                    <p className="mb-0">${item.price}</p>
-                </div>
+                    <div className="d-flex align-items-center">
+                    
+                        <img
+                            src={item.image}
+                            alt={item.name}
+                            style={{
+                            width: "70px",
+                            height: "70px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            marginRight: "15px"
+                            }}
+                        />
+
+                        <div>
+                            <h5>{item.name}</h5>
+                            <p className="mb-0">${item.price}</p>
+                        </div>
+
+                    </div>
 
                 <div>
 
