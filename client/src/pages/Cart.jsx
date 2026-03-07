@@ -12,7 +12,9 @@ const Cart = () => {
     return (
         <div className="container mt-5">
 
-        <h2 className="mb-4">&#xF239; Carrito de Compras</h2>
+        <h2 className="mb-4">
+            <i className="bi bi-cart3"></i> Carrito de Compras
+        </h2>
 
         {cart.length === 0 ? (
             <p>Tu carrito está vacío</p>
@@ -31,19 +33,19 @@ const Cart = () => {
                 <div>
 
                     <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => decrementQuantity(item.id)}
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={() => decrementQuantity(item.id)}
                     >
-                    &#xF2E5;
+                        <i className="bi bi-dash"></i>
                     </button>
 
                     <span className="mx-3">{item.quantity}</span>
 
                     <button
-                    className="btn btn-outline-success btn-sm"
-                    onClick={() => incrementQuantity(item.id)}
+                        className="btn btn-outline-success btn-sm"
+                        onClick={() => incrementQuantity(item.id)}
                     >
-                    &#xF4F9;
+                        <i className="bi bi-plus"></i>
                     </button>
 
                 </div>
@@ -56,7 +58,7 @@ const Cart = () => {
                 className="btn btn-dark mt-3"
                 onClick={() => navigate("/checkout")}
             >
-                &#xF170; Ir a Pagar
+                <i className="bi bi-credit-card"></i> Ir a Pagar
             </button>
 
             </>

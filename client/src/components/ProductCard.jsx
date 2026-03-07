@@ -60,7 +60,7 @@ const ProductCard = (props) => {
                                         key={i} 
                                         style={{ color: i < stars ? '#F0D700' : 'lightgray' }}
                                     >
-                                        &#9733; Valoración
+                                        &#9733;
                                     </span>
                                 ))
                                 }
