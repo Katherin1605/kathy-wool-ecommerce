@@ -26,12 +26,11 @@ function AdminSidebar(){
       <div className="d-flex gap-3 align-items-center">
 
         <NavLink className="btn" to="/admin-profile">
-          Administrador
+          <i class="bi bi-person"></i>  Administrador
         </NavLink>
 
         <NavLink className="btn" to="/">
-        <i class="bi bi-box-arrow-right"></i>
-          Salir 
+        <i class="bi bi-box-arrow-right"></i>  Salir 
         </NavLink>
 
       </div>

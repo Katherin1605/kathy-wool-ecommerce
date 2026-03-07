@@ -18,23 +18,44 @@ function AdminDashboard() {
             <div className="admin-metrics">
 
                 <div className="metric-card">
+                <div>
                     <h3>Total productos</h3>
                     <p>{metrics.totalProducts}</p>
                 </div>
+                <div className="metric-icon">
+                    <i className="bi bi-box-seam"></i>
+                </div>
+
+                </div>
 
                 <div className="metric-card">
+                <div>
                     <h3>Stock Total</h3>
                     <p>{metrics.totalStock}</p>
                 </div>
-
-                <div className="metric-card">
-                    <h3>Valor Inventario</h3>
-                    <p>${metrics.inventoryValue}</p>
+                <div className="metric-icon">
+                    <i className="bi bi-graph-up-arrow"></i>
+                </div>
                 </div>
 
                 <div className="metric-card">
+                <div>
+                    <h3>Valor Inventario</h3>
+                    <p>${metrics.inventoryValue}</p>
+                </div>
+                <div className="metric-icon">
+                    <i className="bi bi-currency-dollar"></i>
+                </div>
+                </div>
+
+                <div className="metric-card">
+                <div>
                     <h3>Stock Bajo</h3>
                     <p>{metrics.lowStock}</p>
+                </div>
+                <div className="metric-icon">
+                    <i className="bi bi-exclamation-circle"></i>
+                </div>
                 </div>
 
             </div>
@@ -44,7 +65,7 @@ function AdminDashboard() {
                     <input type="text" className="form-control" placeholder=" 🔍 Buscar productos..."/>
                 </div>
                 <div className="actions">
-                    <button className="btn btn-primary"><i class="bi bi-plus-lg"></i> Agregar Producto</button>
+                    <button className="btn-primary"><i className="bi bi-plus-lg"></i> Agregar Producto</button>
                 </div>
             </div>
 
