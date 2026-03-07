@@ -6,7 +6,7 @@ function Footer() {
                 <div className="d-flex flex-column">
                 <div className="fw-bold d-flex flex-row" to="/">
                     <div className="navbar-brand logo-icon d-flex align-items-center justify-content-center me-2">
-                        <i class="bi bi-shop"></i>
+                        <i className="bi bi-shop" aria-hidden></i>
                     </div>
                     kathyWool
                 </div>

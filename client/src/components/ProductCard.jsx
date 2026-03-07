@@ -3,16 +3,12 @@ import { useCart } from "../context/CartContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductCard = (props) => {
-    
+
     const { id, name, price, image, stars } = props
-    
+
     //agregar:
     const { addToCart } = useCart();
-    
-    const colorRosa = '#f52a8f';
-    const colorFondo = '#f8f9fa';
-    
-    //agregar:
+
     const handleAddToCart = () => {
         addToCart({
             id: id,
@@ -21,20 +17,14 @@ const ProductCard = (props) => {
             image: image
         });
     };
-    
-//editar el botón: onClick y cambio de estrellas a stars
-    
+
     return (
         <div className='m-3'>
-            <div 
-                className="card" 
-                style={{ width: '18rem', height: '100%', backgroundColor: colorFondo, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                
-                <img 
-                    src={image} 
-                    className="card-img-top" 
-                    alt={name} 
-                    style={{height: '300px', overflow: 'scroll'}}
+            <div className="card product-card-wrapper rounded">
+                <img
+                    src={image}
+                    className="card-img-top product-card-img"
+                    alt={name}
                 />
 
                 <div className="card-body">
@@ -45,21 +35,19 @@ const ProductCard = (props) => {
 
                         <div className='col p-2'>
 
-                            <p 
-                                className="card-text" 
-                                style={{color: colorRosa, fontWeight: 'bold'}}
-                            >
+                            <p className="card-text price-text mb-0">
                                 ${Number(price).toFixed(2)}
                             </p>
-                        
+
                         </div>
 
                         <div className='col'>
                             <p className="card-text">
                                 {Array.from({ length: 5 }, (_, i) => (
-                                    <span 
-                                        key={i} 
-                                        style={{ color: i < stars ? '#F0D700' : 'lightgray' }}
+                                    <span
+                                        key={i}
+                                        className={i < stars ? 'star-filled' : 'star-empty'}
+                                        aria-hidden
                                     >
                                         &#9733;
                                     </span>
@@ -71,28 +59,20 @@ const ProductCard = (props) => {
 
                     </div>
 
-                    <button 
+                    <button
                         onClick={handleAddToCart}
                         type="button"
-                        className="btn btn-danger border border-0 "
-                        style={{
-                            width: '100%', 
-                            fontWeight: 'bold', 
-                            color: 'white', 
-                            backgroundColor: colorRosa
-                            }}
+                        className="btn-add-cart"
+                        aria-label="Agregar al carrito"
                     >
-                        &#x1F6D2; Agregar al Carrito
+                        <i className="bi bi-cart me-2" aria-hidden></i>
+                        Agregar al Carrito
                     </button>
 
-                    <button 
+                    <button
                         type="button"
-                        className="btn btn-secondary border border-0 "
-                        style={{
-                            width: '100%', 
-                            fontWeight: 'bold', 
-                            color: 'white', 
-                            marginTop: '10px'}}
+                        className="btn-details"
+                        aria-label="Ver detalles del producto"
                     >
                         Ver detalles
                     </button>

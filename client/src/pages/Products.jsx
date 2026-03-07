@@ -27,7 +27,7 @@ const Products = () => {
         <div className='d-flex flex-column align-items-center mb-5'>
             <h2>Galería de productos</h2>
 
-            <div className='d-flex flex-wrap justify-content-center' style={{ height: '30vh' }}>
+            <div className="d-flex flex-wrap justify-content-center products-grid-wrapper">
                 {products.map((product) => (
                     <ProductCard
                         key={product.id}
@@ -36,7 +36,7 @@ const Products = () => {
                         //corregir nombres a inglés
                         name={product.name}
                         price={product.priceDetails}
-                        image={product.image}
+                        image="product-placeholder.png"
                         stars={product.stars}
                     />
                 ))}

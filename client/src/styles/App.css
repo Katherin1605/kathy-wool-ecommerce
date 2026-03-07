@@ -1,20 +1,42 @@
 :root {
 
+    /* Brand */
     --primary-color: #f52a8f;
-    --secondary-color: #E91E63;
+    --primary-hover: #E91E63;
+    --secondary-color: #6c757d;
+    --secondary-bg: #e9ecef;
+    --secondary-bg-hover: #dee2e6;
 
-    --bg-color: #fce4ec;
+    /* Backgrounds */
+    --bg-page: #fdf6f9;
+    --bg-section: #fce4ec;
+    --bg-card: #ffffff;
+    --bg-card-alt: #f8f9fa;
 
-    --dark-color: #1f2937;
-    --light-bg: #fdf6f9;
-
+    /* Text */
     --text-color: #374151;
-    --light-gray: #9E9E9E;
-    --p-color: #ced4da;
-    --text-deco: none;
+    --text-heading: #2c3345;
+    --text-muted: #6c757d;
+    --text-footer: #ced4da;
 
+    /* UI */
+    --dark-color: #1f2937;
+    --light-gray: #9E9E9E;
+    --border-input: #ced4da;
+    --star-filled: #F0D700;
+    --star-empty: #e0e0e0;
+
+    /* Metric icons (admin) */
+    --metric-primary: rgba(245, 42, 143, 0.4);
+    --metric-success: rgba(93, 245, 42, 0.4);
+    --metric-info: rgba(204, 32, 201, 0.4);
+    --metric-danger: rgba(234, 12, 12, 0.4);
+
+    --text-deco: none;
     --border-radius: 10px;
+    --border-radius-lg: 1.5rem;
     --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.1);
     --transition: 0.2s;
 
 }
@@ -23,7 +45,7 @@
 body {
     margin: 0;
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    background: var(--light-bg);
+    background: var(--bg-page);
     color: var(--text-color);
 }
 
@@ -40,8 +62,8 @@ body {
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(rgba(236, 72, 153, 0.6),
-            rgba(236, 72, 153, 0.6)),
+    background: linear-gradient(rgba(245, 42, 143, 0.6),
+            rgba(245, 42, 143, 0.6)),
         url("https://images.unsplash.com/photo-1618574760076-bae45d84041c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5YXJuJTIwd29vbCUyMGNyYWZ0c3xlbnwxfHx8fDE3NzIwMzY2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080");
 
     background-size: cover;
@@ -88,8 +110,42 @@ max-width:600px;
 
 .btn-primary:hover {
 
-    background: var(--secondary-color);
+    background: var(--primary-hover);
 
+}
+
+/* Edit / Delete buttons (admin) */
+.btn-edit {
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: var(--text-deco);
+}
+
+.btn-edit:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-delete {
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    background: #dc3545;
+    color: white;
 }
 
 .products-section {
@@ -152,12 +208,11 @@ max-width:600px;
     justify-content: center;
     gap: 200px;
     padding: 60px 20px;
-    background: var(--bg-color);
+    background: var(--bg-section);
 
 }
 
 .feature {
-    background-color: var();
     text-align: center;
     max-width: 200px;
     display: flex;
@@ -304,19 +359,19 @@ justify-content: space-between;
 }
 
 .bi-box-seam {
-    color: #f52a8f66;
+    color: var(--metric-primary);
 }
 
 .bi-graph-up-arrow {
-    color: #5df52a66;
+    color: var(--metric-success);
 }
 
 .bi-currency-dollar {
-    color: #cc20c966;
+    color: var(--metric-info);
 }
 
 .bi-exclamation-circle {
-    color: #ea0c0c66;
+    color: var(--metric-danger);
 }
 
 .bi-gear {
@@ -412,6 +467,181 @@ min-width: 220px;
 
 .footer p {
 
-    color: var(--p-color);
+    color: var(--text-footer);
 
+}
+
+/* ========== Utility classes (evitar estilos en línea) ========== */
+
+.bg-page {
+    background-color: var(--bg-page);
+}
+
+.bg-card-alt {
+    background-color: var(--bg-card-alt);
+}
+
+.text-heading {
+    color: var(--text-heading);
+    letter-spacing: -0.5px;
+}
+
+.text-primary-accent {
+    color: var(--primary-color);
+}
+
+.link-primary-accent {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.link-primary-accent:hover {
+    color: var(--primary-hover);
+}
+
+/* Form / Auth pages */
+.form-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--border-radius-lg);
+}
+
+.form-card--narrow {
+    max-width: 400px;
+    border-radius: var(--border-radius);
+}
+
+.icon-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    color: white;
+    background-color: var(--primary-color);
+}
+
+.icon-circle--sm {
+    width: 60px;
+    height: 60px;
+}
+
+.text-sm {
+    font-size: 0.85rem;
+}
+
+.text-md {
+    font-size: 0.95rem;
+}
+
+.text-base {
+    font-size: 1rem;
+}
+
+.text-muted-sm {
+    font-size: 0.9rem;
+}
+
+/* Product card */
+.product-card-wrapper {
+    width: 18rem;
+    height: 100%;
+    background-color: var(--bg-card-alt);
+    box-shadow: var(--shadow-card);
+}
+
+.product-card-img {
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.price-text {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.star-filled {
+    color: var(--star-filled);
+}
+
+.star-empty {
+    color: var(--star-empty);
+}
+
+.btn-add-cart {
+    width: 100%;
+    font-weight: bold;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    transition: var(--transition);
+}
+
+.btn-add-cart:hover {
+    background-color: var(--primary-hover);
+    color: white;
+}
+
+.btn-details {
+    width: 100%;
+    font-weight: bold;
+    color: var(--text-heading);
+    background-color: var(--secondary-bg);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin-top: 10px;
+    transition: var(--transition);
+}
+
+.btn-details:hover {
+    background-color: var(--secondary-bg-hover);
+    color: var(--text-heading);
+}
+
+/* btn-secondary: acción secundaria (fondo claro, texto oscuro) */
+.btn-secondary {
+    background: var(--secondary-bg);
+    color: var(--text-heading);
+    border: none;
+    padding: 12px 26px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: var(--text-deco);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-bg-hover);
+    color: var(--text-heading);
+}
+
+/* Cart */
+.cart-item-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.btn-cart-primary {
+    background-color: var(--dark-color);
+    color: white;
+    border: none;
+}
+
+.btn-cart-primary:hover {
+    background-color: #374151;
+    color: white;
+}
+
+/* Products grid wrapper */
+.products-grid-wrapper {
+    min-height: 30vh;
 }

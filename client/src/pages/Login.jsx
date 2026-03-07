@@ -14,9 +14,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const pinkColor = '#f52a8f';
-  const bgColor = '#fdf6f9';
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -45,74 +42,58 @@ const Login = () => {
   };
 
   return (
-    <div 
-      className="d-flex justify-content-center align-items-center vh-100" 
-      style={{ backgroundColor: bgColor }}
-    >
-      <div 
-        className="card shadow p-4 border-0" 
-        style={{ width: '100%', maxWidth: '420px', borderRadius: '1.5rem' }}
-      >
-        
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-page">
+      <div className="card shadow p-4 border-0 form-card">
         <div className="text-center mb-4 mt-2">
-          <div 
-            className="d-inline-flex justify-content-center align-items-center mb-3 shadow-sm"
-            style={{ 
-              backgroundColor: pinkColor, 
-              color: 'white', 
-              width: '65px', 
-              height: '65px', 
-              borderRadius: '50%' 
-            }}
-          >
-            <i className="bi bi-box-arrow-in-right fs-2"></i>
+          <div className="icon-circle d-inline-flex mb-3 shadow-sm">
+            <i className="bi bi-box-arrow-in-right fs-2" aria-hidden></i>
           </div>
-          <h2 className="fw-bold mb-1" style={{ color: '#2c3345', letterSpacing: '-0.5px' }}>
+          <h2 className="fw-bold mb-1 text-heading">
             Iniciar Sesión
           </h2>
-          <p className="text-muted" style={{ fontSize: '0.95rem' }}>
+          <p className="text-muted text-md">
             Bienvenido de nuevo a kathyWool
           </p>
         </div>
 
-        {error && <div className="alert alert-danger py-2" style={{ fontSize: '0.85rem' }}>{error}</div>}
+        {error && <div className="alert alert-danger py-2 text-sm">{error}</div>}
 
         <form onSubmit={handleSubmit}>
       
           <div className="mb-3">
-            <label className="form-label text-secondary fw-semibold mb-1" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-secondary fw-semibold mb-1 text-sm">
               Correo Electrónico
             </label>
             <div className="input-group">
               <span className="input-group-text bg-white border-end-0 text-muted">
-                <i className="bi bi-envelope"></i>
+                <i className="bi bi-envelope" aria-hidden></i>
               </span>
               <input 
                 type="email" 
-                className="form-control border-start-0 ps-0 shadow-none" 
+                className="form-control border-start-0 ps-0 shadow-none text-md" 
                 placeholder="tu@email.com" 
-                style={{ fontSize: '0.95rem' }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                aria-label="Correo electrónico"
               />
             </div>
           </div>
 
           <div className="mb-3">
-            <label className="form-label text-secondary fw-semibold mb-1" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-secondary fw-semibold mb-1 text-sm">
               Contraseña
             </label>
             <div className="input-group">
               <span className="input-group-text bg-white border-end-0 text-muted">
-                <i className="bi bi-lock"></i>
+                <i className="bi bi-lock" aria-hidden></i>
               </span>
               <input 
                 type="password" 
-                className="form-control border-start-0 ps-0 shadow-none" 
+                className="form-control border-start-0 ps-0 shadow-none text-md" 
                 placeholder="••••••••" 
-                style={{ fontSize: '0.95rem' }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                aria-label="Contraseña"
               />
             </div>
           </div>
@@ -123,19 +104,18 @@ const Login = () => {
                 className="form-check-input shadow-none" 
                 type="checkbox" 
                 id="rememberMe" 
+                aria-label="Recordarme"
               />
               <label 
-                className="form-check-label text-secondary" 
-                htmlFor="rememberMe" 
-                style={{ fontSize: '0.85rem' }}
+                className="form-check-label text-secondary text-sm" 
+                htmlFor="rememberMe"
               >
                 Recordarme
               </label>
             </div>
             <Link 
               to="#" 
-              className="text-decoration-none fw-medium" 
-              style={{ color: pinkColor, fontSize: '0.85rem' }}
+              className="link-primary-accent fw-medium text-sm"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -143,25 +123,19 @@ const Login = () => {
 
           <button 
             type="submit" 
-            className="btn text-white w-100 py-2 fw-bold shadow-sm mb-4" 
-            style={{ 
-              backgroundColor: pinkColor, 
-              borderRadius: '0.75rem',
-              fontSize: '1rem' 
-            }}
+            className="btn-primary w-100 py-2 mb-4"
           >
             Iniciar Sesión
           </button>
         </form>
 
         <div className="text-center mb-2">
-          <span className="text-secondary" style={{ fontSize: '0.9rem' }}>
+          <span className="text-secondary text-muted-sm">
             ¿No tienes cuenta?{' '}
           </span>
           <Link 
             to="/register" 
-            className="text-decoration-none fw-bold" 
-            style={{ color: pinkColor, fontSize: '0.9rem' }}
+            className="link-primary-accent fw-bold text-muted-sm"
           >
             Regístrate
           </Link>

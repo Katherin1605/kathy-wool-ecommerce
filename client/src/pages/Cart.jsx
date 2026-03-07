@@ -31,13 +31,7 @@ const Cart = () => {
                         <img
                             src={item.image}
                             alt={item.name}
-                            style={{
-                            width: "70px",
-                            height: "70px",
-                            objectFit: "cover",
-                            borderRadius: "8px",
-                            marginRight: "15px"
-                            }}
+                            className="cart-item-img"
                         />
 
                         <div>
@@ -72,10 +66,12 @@ const Cart = () => {
             <h4 className="mt-4">Total: ${total.toFixed(2)}</h4>
 
             <button
-                className="btn btn-dark mt-3"
+                className="btn btn-cart-primary mt-3"
                 onClick={() => navigate("/checkout")}
+                aria-label="Ir a pagar"
             >
-                <i className="bi bi-credit-card"></i> Ir a Pagar
+                <i className="bi bi-credit-card me-2" aria-hidden></i>
+                Ir a Pagar
             </button>
 
             </>
