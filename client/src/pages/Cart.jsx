@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Cart = () => {
 
@@ -10,7 +12,7 @@ const Cart = () => {
     return (
         <div className="container mt-5">
 
-        <h2 className="mb-4">🛒 Carrito de Compras</h2>
+        <h2 className="mb-4">&#xF239; Carrito de Compras</h2>
 
         {cart.length === 0 ? (
             <p>Tu carrito está vacío</p>
@@ -32,7 +34,7 @@ const Cart = () => {
                     className="btn btn-outline-danger btn-sm"
                     onClick={() => decrementQuantity(item.id)}
                     >
-                    -
+                    &#xF2E5;
                     </button>
 
                     <span className="mx-3">{item.quantity}</span>
@@ -41,7 +43,7 @@ const Cart = () => {
                     className="btn btn-outline-success btn-sm"
                     onClick={() => incrementQuantity(item.id)}
                     >
-                    +
+                    &#xF4F9;
                     </button>
 
                 </div>
@@ -54,7 +56,7 @@ const Cart = () => {
                 className="btn btn-dark mt-3"
                 onClick={() => navigate("/checkout")}
             >
-                Ir a Checkout
+                &#xF170; Ir a Pagar
             </button>
 
             </>
