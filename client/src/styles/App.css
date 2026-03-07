@@ -319,6 +319,10 @@ justify-content: space-between;
     color: #ea0c0c66;
 }
 
+.bi-gear {
+    color: var(--primary-color);
+}
+
 .admin-header{
 
 display:flex;
@@ -373,6 +377,12 @@ text-align:center;
     border: 1px solid #ced4da;
     border-radius: 15px;
     color: var(--text-color);
+
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none; 
 }
 
 .form-actions{

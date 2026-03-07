@@ -62,7 +62,7 @@ function AdminDashboard() {
 
             <div className="search">
                 <div className="input-group flex-nowrap">
-                    <input type="text" className="form-control" placeholder=" 🔍 Buscar productos..."/>
+                    <input type="text" className="form-control" placeholder=" 🔍  Buscar productos..."/>
                 </div>
                 <div className="actions">
                     <button className="btn-primary"><i className="bi bi-plus-lg"></i> Agregar Producto</button>
