@@ -25,16 +25,19 @@ const Products = () => {
 
     return (
         <div className='d-flex flex-column align-items-center mb-5'>
-            <h2>Galer�a de productos</h2>
+            <h2>Galería de productos</h2>
 
             <div className='d-flex flex-wrap justify-content-center' style={{ height: '30vh' }}>
                 {products.map((product) => (
                     <ProductCard
                         key={product.id}
-                        nombre={product.name}
-                        precio={product.priceDetails}
-                        imagen={product.image}
-                        estrellas={product.stars}
+                        //agregar id para evitar duplicados
+                        id={product.id}
+                        //corregir nombres a inglés
+                        name={product.name}
+                        price={product.priceDetails}
+                        image={product.image}
+                        stars={product.stars}
                     />
                 ))}
             </div>
