@@ -1,35 +1,10 @@
 import { Link } from "react-router-dom"
 
-function AdminProducts(){
-
-  const products = [
-    {
-      id:1,
-      name:"Amigurumi Conejito Rosa",
-      category:"Amigurumi",
-      price:25,
-      stock:12,
-      status:"Activo"
-    },
-    {
-      id:2,
-      name:"Bufanda de Lana Suave",
-      category:"Bufandas",
-      price:35,
-      stock:8,
-      status:"Activo"
-    }
-  ]
+function AdminProducts({ products }){
 
   return(
 
     <div>
-
-      <div className="admin-header mt-3">
-
-        <h1>Productos</h1>
-
-      </div>
 
       <table className="admin-table">
 
