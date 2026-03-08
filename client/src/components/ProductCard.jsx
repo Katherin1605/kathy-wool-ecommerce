@@ -1,10 +1,12 @@
 import React from 'react'
 import { useCart } from "../context/CartContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) => {
 
     const { id, name, price, image, stars } = props
+    const navigate = useNavigate();
 
     //agregar:
     const { addToCart } = useCart();
@@ -17,6 +19,10 @@ const ProductCard = (props) => {
             image: image
         });
     };
+
+    const handleViewDetails = (id) => {
+        navigate(`/products/${id}`);
+    }
 
     return (
         <div className='m-3'>
@@ -70,6 +76,7 @@ const ProductCard = (props) => {
                     </button>
 
                     <button
+                        onClick={() => handleViewDetails(id)}
                         type="button"
                         className="btn-details"
                         aria-label="Ver detalles del producto"

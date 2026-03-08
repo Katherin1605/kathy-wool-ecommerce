@@ -49,6 +49,15 @@ body {
     color: var(--text-color);
 }
 
+.category {
+    display: inline-block;
+    background: var(--bg-section);
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+}
+
 .main-container {
 
     max-width: 1200px;

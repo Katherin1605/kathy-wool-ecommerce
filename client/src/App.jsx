@@ -13,6 +13,7 @@ import UserLayout from './layouts/UserLayout'
 import UserProfile from './pages/UserProfile'
 import MyOrders from './components/MyOrders'
 import MyFavorites from './components/MyFavorites'
+import ProductDetails from './pages/ProductDetails'
 
 import { CartProvider } from './context/CartContext'
 
@@ -36,7 +37,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
-            {/* <Route path="/products/:id" element={<ProductDetails />} /> */}
+            <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
           </Route>
 
