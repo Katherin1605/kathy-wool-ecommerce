@@ -36,7 +36,7 @@ const Products = () => {
                         //corregir nombres a inglés
                         name={product.name}
                         price={product.priceDetails}
-                        image="product-placeholder.png"
+                        image={product.image}
                         stars={product.stars}
                     />
                 ))}
