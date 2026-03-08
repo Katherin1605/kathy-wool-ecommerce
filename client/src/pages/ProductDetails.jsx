@@ -5,6 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductDetails = () => {
+    const [liked, setLiked] = useState(false);
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -41,16 +42,25 @@ const ProductDetails = () => {
         });
     };
 
+    const toggleLike = () => {
+        setLiked(!liked);
+    };
+
     return (
         <div>
             <div className='row m-4'>
                 <div className='col-auto'>
                     <img src={product.image} alt={product.name} className='rounded-5' />
-
                 </div>
+
                 <div className='col'>
                     <p className='category'>{product.category}</p>
-                    <h1>{product.name}</h1>
+                    <div className='row'>
+                        <h1 className='col-auto'>{product.name}</h1>
+                        <button onClick={toggleLike} className='btn-liked col-auto'>
+                            <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
+                        </button>
+                    </div>
                     <p><strong>
                         {Array.from({ length: 5 }, (_, i) => (
                             <span
@@ -65,7 +75,7 @@ const ProductDetails = () => {
                     </strong></p>
                     <p className='price' style={{ fontSize: '25px' }}>${product.priceDetails}</p>
                     <p>{product.description}</p>
-                    
+
                     <div className='detail-specifications'>
                         <h4>Especificaciones</h4>
                         <div className='d-flex justify-content-between'>

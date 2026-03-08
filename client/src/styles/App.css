@@ -188,6 +188,23 @@ max-width:600px;
     color: white;
 }
 
+.btn-liked {
+    background: var(--secondary-bg);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 45px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-liked-position {
+    position: absolute;
+    top: 5%;
+    right: 0%;
+    transform: translate(-50%, -50%);
+}
+
 .products-section {
 
     padding: 60px 20px;

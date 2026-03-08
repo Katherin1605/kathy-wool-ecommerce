@@ -2,14 +2,18 @@ import React from 'react'
 import { useCart } from "../context/CartContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const ProductCard = (props) => {
-
+    const [liked, setLiked] = useState(false);
     const { id, name, price, image, stars } = props
     const navigate = useNavigate();
 
-    //agregar:
     const { addToCart } = useCart();
+
+    const toggleLike = () => {
+        setLiked(!liked);
+    };
 
     const handleAddToCart = () => {
         addToCart({
@@ -27,11 +31,18 @@ const ProductCard = (props) => {
     return (
         <div className='m-3'>
             <div className="card product-card-wrapper rounded">
-                <img
-                    src={image}
-                    className="card-img-top product-card-img"
-                    alt={name}
-                />
+                <div className='container'>
+                    <img
+                        src={image}
+                        className="card-img-top product-card-img"
+                        alt={name}
+                        style={{ minWidth: '110%', transform: 'translateX(-4.5%)' }}
+                    />
+                    <button onClick={toggleLike} className='btn-liked btn-liked-position'>
+                        <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
+                    </button>
+                </div>
+
 
                 <div className="card-body">
 
