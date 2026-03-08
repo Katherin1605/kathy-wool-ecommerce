@@ -14,6 +14,7 @@ import UserProfile from './pages/UserProfile'
 import MyOrders from './components/MyOrders'
 import MyFavorites from './components/MyFavorites'
 import ProductDetails from './pages/ProductDetails'
+import Form from "./pages/Form"
 
 import { CartProvider } from './context/CartContext'
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/contact" element={<Form />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
           </Route>

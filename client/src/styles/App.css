@@ -605,6 +605,18 @@ min-width: 220px;
     font-size: 0.9rem;
 }
 
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-actions .btn {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
 /* Product card */
 .product-card-wrapper {
     width: 18rem;
