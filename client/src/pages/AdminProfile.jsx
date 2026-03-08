@@ -42,7 +42,7 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className="profile-container m-4">
+    <div className="profile-container">
 
       {/* Tarjeta de perfil */}
       {isEditing ? (
