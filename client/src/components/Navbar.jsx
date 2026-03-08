@@ -1,13 +1,15 @@
 import { useMemo } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
+import { useUser } from "../context/UserContext"
+import { useCart } from "../context/CartContext"
 
 const optionsByRole = {
-  admin: [
+  Administrador: [
     { label: 'Admin', to: '/admin', icon: 'bi bi-gear', position: 'center' },
     { label: 'Perfil', to: '/admin/profile', icon: 'bi bi-person', field: 'name' }
   ],
-  user: [
-    { label: 'Carrito', to: '/user/cart', icon: 'bi bi-cart' },
+  Cliente: [
+    { label: '', to: '/cart', icon: 'bi bi-cart', badge: true },
     { label: 'Perfil', to: '/user/profile', icon: 'bi bi-person', field: 'name' },
   ],
 }
@@ -23,9 +25,12 @@ const userAdmin = {
 }
 
 function Navbar() {
-  const user = userAdmin;
-  const options = useMemo(() => !!user ? optionsByRole[user.role] : [], [user]);
-  const isLoggedIn = useMemo(() => !!user, [user]);
+  const { token, getProfile, logout } = useUser();
+  const navigate = useNavigate();
+  const { cart } = useCart();
+  const user = getProfile();
+  const options = useMemo(() => !!user ? (optionsByRole[user.role] || []) : [], [user]);
+  const isLoggedIn = useMemo(() => !!token, [token]);
   const mainOptions = useMemo(() => options.filter((option) => option.position === 'center'), [options]);
   const rightOptions = useMemo(() => options.filter((option) => option.position !== 'center'), [options]);
 
@@ -55,26 +60,34 @@ function Navbar() {
               <NavLink className={({ isActive }) => isActive ? 'active' : 'nav-link'} to={option.to}>
                 <i className={`${option.icon} me-2`}></i>
                 {option.field ? user[option.field] : option.label}
+                {option.badge && (
+                <span className="cart-badge">{cart.length}</span>
+                )}
               </NavLink>
             </li>
           ))}
           <li>
-            <NavLink className={({ isActive }) => isActive ? 'active' : 'nav-link'} to="/logout">
-              <i className="bi bi-box-arrow-right me-2"></i>
-              Salir
-            </NavLink>
+            <li>
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => { logout(); navigate("/"); }}
+              >
+                <i className="bi bi-box-arrow-right me-2"></i>
+                Salir
+              </button>
+            </li>
           </li>
         </ul>
-        : <div className="d-flex gap-3 align-items-center">
-          <NavLink className="btn" to="/login">
-            <i className="bi bi-box-arrow-in-right me-2"></i>
-            Iniciar sesión
-          </NavLink>
-          <NavLink className="btn-primary" to="/register">
-            <i className="bi bi-person-plus me-2"></i>
-            Registrarse
-          </NavLink>
-        </div>
+          : <div className="d-flex gap-3 align-items-center">
+            <NavLink className="btn" to="/login">
+              <i className="bi bi-box-arrow-in-right me-2"></i>
+              Iniciar sesión
+            </NavLink>
+            <NavLink className="btn-primary" to="/register">
+              <i className="bi bi-person-plus me-2"></i>
+              Registrarse
+            </NavLink>
+          </div>
       }
     </nav>
   )

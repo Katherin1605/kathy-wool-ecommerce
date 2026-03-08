@@ -9,9 +9,9 @@ import AdminProducts from "./pages/admin/AdminProducts"
 import AdminOrders from "./pages/admin/AdminOrders"
 import NewProduct from "./pages/admin/NewProduct"
 import UserLayout from './layouts/UserLayout'
-// import UserProfile from './pages/UserProfile'
-// import MyOrders from './components/MyOrders'
-// import MyFavorites from './components/MyFavorites'
+import UserProfile from './pages/UserProfile'
+import MyOrders from './components/MyOrders'
+import MyFavorites from './components/MyFavorites'
 
 import { CartProvider } from './context/CartContext'
 
@@ -56,9 +56,9 @@ function App() {
           {/* Rutas protegidas para usuarios */}
           <Route element={<UserLayout />}>
 
-            {/* <Route path="/user/profile" element={<UserProfile />} /> */}
-            {/* <Route path="/user/orders" element={<MyOrders />} /> */}
-            {/* <Route path="/user/favorites" element={<MyFavorites />} /> */}
+            <Route path="/user/profile" element={<UserProfile />} />
+            <Route path="/user/orders" element={<MyOrders />} />
+            <Route path="/user/favorites" element={<MyFavorites />} />
 
           </Route>
 

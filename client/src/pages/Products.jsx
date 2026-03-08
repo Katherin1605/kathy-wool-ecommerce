@@ -24,7 +24,7 @@ const Products = () => {
     console.log(products);
 
     return (
-        <div className='d-flex flex-column align-items-center mb-5'>
+        <div className='d-flex flex-column align-items-center m-4'>
             <h2>Galería de productos</h2>
 
             <div className="d-flex flex-wrap justify-content-center products-grid-wrapper">

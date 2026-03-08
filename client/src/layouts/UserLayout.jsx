@@ -1,31 +1,17 @@
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
 import { Outlet } from "react-router-dom"
 
-function UserLayout(){
-
-  return(
-
-    <div className="user-layout">
-
-      <aside className="user-sidebar">
-
-        <h3>Mi cuenta</h3>
-
-        <ul>
-          <li>Perfil</li>
-          <li>Mis pedidos</li>
-          <li>Favoritos</li>
-        </ul>
-
-      </aside>
-
-      <main className="user-content">
-        <Outlet/>
+function UserLayout() {
+  return (
+    <>
+      <Navbar />
+      <main className="main-container">
+        <Outlet />
       </main>
-
-    </div>
-
+      <Footer />
+    </>
   )
-
 }
 
 export default UserLayout

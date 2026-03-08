@@ -108,6 +108,10 @@ max-width:600px;
 
 }
 
+.btn-primary:active {
+    color: white;
+}
+
 .btn-primary:hover {
 
     background: var(--primary-hover);
@@ -376,6 +380,28 @@ justify-content: space-between;
 
 .bi-gear {
     color: var(--primary-color);
+}
+
+.bi-cart {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-badge {
+    position: absolute;
+    top: 14px;
+    right: 250px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: bold;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
 }
 
 .admin-header{

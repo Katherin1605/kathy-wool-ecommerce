@@ -29,9 +29,9 @@ const Login = () => {
         const user = data[0];
         auth(user);
         if (user.role === 'Administrador') {
-          navigate('/administrador');
+          navigate('/admin');
         } else {
-          navigate('/home');
+          navigate('/');
         }
       } else {
         setError('Correo o contraseña incorrectos');

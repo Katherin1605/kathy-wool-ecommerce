@@ -46,7 +46,7 @@ const Registro = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-page">
+    <div className="d-flex justify-content-center align-items-center bg-page">
       <div className="card shadow-sm p-4 border-0 form-card form-card--narrow">
         <div className="text-center mb-4 mt-2">
           <div className="icon-circle icon-circle--sm d-inline-flex mb-3">
