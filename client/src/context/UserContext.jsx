@@ -50,13 +50,18 @@ export const UserProvider = ({ children }) => {
     return user;
   };
 
+  const updateProfile = (updatedData) => {
+    setUser((prev) => ({ ...prev, ...updatedData }));
+  };
+
   const stateGlobal = {
     token,
     logout,
     auth,
     register,
     email,
-    getProfile
+    getProfile,
+    updateProfile
   };
 
   return <UserContext.Provider value={stateGlobal}>{children}</UserContext.Provider>;
