@@ -25,13 +25,9 @@ function AdminProducts(){
 
     <div>
 
-      <div className="admin-header">
+      <div className="admin-header mt-3">
 
         <h1>Productos</h1>
-
-        <Link to="/admin/new-product" className="btn-primary">
-          Agregar Producto
-        </Link>
 
       </div>
 

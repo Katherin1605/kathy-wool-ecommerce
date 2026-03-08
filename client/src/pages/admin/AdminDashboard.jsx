@@ -1,4 +1,5 @@
-// import Products from "../../components/Products"
+import AdminProducts from "./AdminProducts"
+import Products from "./AdminProducts"
 
 function AdminDashboard() {
 
@@ -69,7 +70,7 @@ function AdminDashboard() {
                 </div>
             </div>
 
-            {/* <Products /> */}
+            <AdminProducts />
 
         </div>
     )
