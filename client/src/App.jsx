@@ -5,6 +5,7 @@ import { UserProvider } from './context/UserContext'
 import MainLayout from './layouts/MainLayout'
 import AdminLayout from './layouts/AdminLayout'
 import AdminDashboard from "./pages/admin/AdminDashboard"
+import AdminProfile from "./pages/AdminProfile"
 import AdminProducts from "./pages/admin/AdminProducts"
 import AdminOrders from "./pages/admin/AdminOrders"
 import NewProduct from "./pages/admin/NewProduct"
@@ -51,6 +52,7 @@ function App() {
             {/* <Route path="/admin/users" element={<AdminUsers />} /> */}
 
             <Route path="/admin/new-product" element={<NewProduct />} />
+            <Route path="/admin/profile" element={<AdminProfile />} />
           </Route>
 
           {/* Rutas protegidas para usuarios */}

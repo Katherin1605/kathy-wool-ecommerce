@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate, useLocation } from "react-router-dom"
 import { useUser } from "../context/UserContext"
 import { useCart } from "../context/CartContext"
 
@@ -14,23 +14,19 @@ const optionsByRole = {
   ],
 }
 
-const _user = {
-  role: 'user',
-  name: 'Juan Perez'
-}
-
-const userAdmin = {
-  role: 'admin',
-  name: 'Administrador'
-}
+const mockAdmin = { name: 'Administrador', role: 'Administrador' };
 
 function Navbar() {
   const { token, getProfile, logout } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const { cart } = useCart();
-  const user = getProfile();
-  const options = useMemo(() => !!user ? (optionsByRole[user.role] || []) : [], [user]);
-  const isLoggedIn = useMemo(() => !!token, [token]);
+
+  const isAdminRoute = location.pathname.startsWith('/admin');
+  const user = getProfile() || (isAdminRoute ? mockAdmin : null);
+  const isLoggedIn = !!token || isAdminRoute;
+
+  const options = useMemo(() => user ? (optionsByRole[user.role] || []) : [], [user]);
   const mainOptions = useMemo(() => options.filter((option) => option.position === 'center'), [options]);
   const rightOptions = useMemo(() => options.filter((option) => option.position !== 'center'), [options]);
 
