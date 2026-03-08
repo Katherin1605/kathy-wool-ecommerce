@@ -1,4 +1,5 @@
 import Hero from "../components/Hero"
+import BestProducts from "../components/BestProducts"
 
 function Home() {
 
@@ -12,7 +13,7 @@ function Home() {
                 <h2 className="text-center mb-4">
                     Productos Destacados
                 </h2>
-
+                <BestProducts />
 
             </section>
 
