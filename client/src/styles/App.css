@@ -667,6 +667,20 @@ min-width: 220px;
     color: white;
 }
 
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #f52a8f;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
+}
+
 /* Products grid wrapper */
 .products-grid-wrapper {
     min-height: 30vh;
