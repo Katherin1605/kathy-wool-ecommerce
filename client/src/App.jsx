@@ -22,6 +22,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
+import Checkout from "./pages/Checkout"
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
 
           {/* Rutas protegidas para admin */}

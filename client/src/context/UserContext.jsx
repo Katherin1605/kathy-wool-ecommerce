@@ -47,7 +47,11 @@ export const UserProvider = ({ children }) => {
   };
 
   const getProfile = () => {
-    return user;
+    if (user) return user;
+    if (email) {
+      return { email };
+    }
+    return null;
   };
 
   const updateProfile = (updatedData) => {

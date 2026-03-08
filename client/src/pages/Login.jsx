@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +10,9 @@ const API_URL = 'https://69a9119832e2d46caf45190f.mockapi.io/api/v1/users';
 const Login = () => {
   const { auth } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +34,7 @@ const Login = () => {
         if (user.role === 'Administrador') {
           navigate('/admin');
         } else {
-          navigate('/');
+          navigate(from);
         }
       } else {
         setError('Correo o contraseña incorrectos');

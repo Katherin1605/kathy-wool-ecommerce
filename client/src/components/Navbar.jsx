@@ -9,7 +9,6 @@ const optionsByRole = {
     { label: 'Perfil', to: '/admin/profile', icon: 'bi bi-person', field: 'name' }
   ],
   Cliente: [
-    { label: '', to: '/cart', icon: 'bi bi-cart', badge: true },
     { label: 'Perfil', to: '/user/profile', icon: 'bi bi-person', field: 'name' },
   ],
 }
