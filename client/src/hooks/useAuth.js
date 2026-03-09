@@ -2,9 +2,7 @@ import { useUser } from "../context/UserContext"
 
 export const useAuth = () => {
 
-    const { token, getProfile } = useUser()
-
-    const user = getProfile()
+    const { token, user, auth, logout, register } = useUser()
 
     const isLoggedIn = !!token
     const isAdmin = user?.role === "Administrador"
@@ -12,6 +10,9 @@ export const useAuth = () => {
 
     return {
         user,
+        auth,
+        logout,
+        register,
         isLoggedIn,
         isAdmin,
         isClient

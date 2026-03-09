@@ -26,14 +26,6 @@ function Navbar() {
 
   const isAdminRoute = location.pathname.startsWith('/admin')
 
-  // const cartCount = useMemo(() => {
-  //   return cart.reduce((acc, item) => acc + item.quantity, 0)
-  // }, [cart])
-
-  // const cartTotal = useMemo(() => {
-  //   return cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  // }, [cart])
-
   const options = useMemo(() => user ? (optionsByRole[user.role] || []) : [], [user]);
 
   return (
