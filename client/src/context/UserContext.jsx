@@ -16,8 +16,8 @@ export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [email, setEmail] = useState(localStorage.getItem('email'));
 
-  const register = (name, userEmail, password) => {
-    const newUser = { id: Date.now(), name, email: userEmail, password };
+  const register = (name, userEmail, password, role = 'Cliente') => {
+    const newUser = { id: Date.now(), name, email: userEmail, password, role };
     const fakeToken = `token_${Date.now()}`;
     setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
@@ -28,18 +28,14 @@ export const UserProvider = ({ children }) => {
     return newUser;
   };
 
-  const auth = (userEmail, password) => {
-    const found = users.find((u) => u.email === userEmail && u.password === password);
-    if (found) {
-      const fakeToken = `token_${Date.now()}`;
-      setUser(found);
-      setToken(fakeToken);
-      setEmail(found.email);
-      localStorage.setItem('token', fakeToken);
-      localStorage.setItem('email', found.email);
-      return found;
-    }
-    return null;
+  const auth = (userData) => {
+    const fakeToken = `token_${Date.now()}`;
+    setUser(userData);
+    setToken(fakeToken);
+    setEmail(userData.email);
+    localStorage.setItem('token', fakeToken);
+    localStorage.setItem('email', userData.email);
+    return userData;
   };
 
   const logout = () => {
@@ -51,7 +47,15 @@ export const UserProvider = ({ children }) => {
   };
 
   const getProfile = () => {
-    return user;
+    if (user) return user;
+    if (email) {
+      return { email };
+    }
+    return null;
+  };
+
+  const updateProfile = (updatedData) => {
+    setUser((prev) => ({ ...prev, ...updatedData }));
   };
 
   const stateGlobal = {
@@ -60,7 +64,8 @@ export const UserProvider = ({ children }) => {
     auth,
     register,
     email,
-    getProfile
+    getProfile,
+    updateProfile
   };
 
   return <UserContext.Provider value={stateGlobal}>{children}</UserContext.Provider>;

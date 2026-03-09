@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+const API_URL = 'https://69a9119832e2d46caf45190f.mockapi.io/api/v1/users';
 
 const Registro = () => {
   const { register } = useUser();
@@ -14,10 +17,7 @@ const Registro = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const colorRosa = '#f52a8f';
-  const colorFondo = '#fdf6f9';
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
@@ -31,51 +31,40 @@ const Registro = () => {
       return;
     }
 
-    const newUser = register(name, email, password);
-    setSuccess(`¡Bienvenido/a ${newUser.name}! Cuenta creada exitosamente.`);
-    setTimeout(() => navigate('/'), 1500);
-    setName('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
+    try {
+      const { data } = await axios.post(API_URL, { name, email, password, role: 'Cliente' });
+      register(data.name, data.email, data.password, data.role);
+      setSuccess(`¡Bienvenido/a ${data.name}! Cuenta creada exitosamente.`);
+      setTimeout(() => navigate('/'), 1500);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error al registrar usuario. Intenta de nuevo.');
+    }
   };
 
   return (
-    <div 
-      className="d-flex justify-content-center align-items-center vh-100" 
-      style={{ backgroundColor: colorFondo }}
-    >
-      <div 
-        className="card shadow-sm p-4 border-0" 
-        style={{ width: '100%', maxWidth: '400px', borderRadius: '1rem' }}
-      >
-        
+    <div className="d-flex justify-content-center align-items-center bg-page">
+      <div className="card shadow-sm p-4 border-0 form-card form-card--narrow">
         <div className="text-center mb-4 mt-2">
-          <div 
-            className="d-inline-flex justify-content-center align-items-center mb-3"
-            style={{ 
-              backgroundColor: colorRosa, 
-              color: 'white', 
-              width: '60px', 
-              height: '60px', 
-              borderRadius: '50%' 
-            }}
-          >
-            <i className="bi bi-person-plus fs-3"></i>
+          <div className="icon-circle icon-circle--sm d-inline-flex mb-3">
+            <i className="bi bi-person-plus fs-3" aria-hidden></i>
           </div>
-          <h2 className="fw-bold" style={{ color: '#2c3345' }}>Crear Cuenta</h2>
-          <p className="text-muted" style={{ fontSize: '0.9rem' }}>
+          <h2 className="fw-bold text-heading">Crear Cuenta</h2>
+          <p className="text-muted text-muted-sm">
             Únete a la comunidad kathyWool
           </p>
         </div>
 
-        {error && <div className="alert alert-danger py-2" style={{ fontSize: '0.85rem' }}>{error}</div>}
-        {success && <div className="alert alert-success py-2" style={{ fontSize: '0.85rem' }}>{success}</div>}
+        {error && <div className="alert alert-danger py-2 text-sm">{error}</div>}
+        {success && <div className="alert alert-success py-2 text-sm">{success}</div>}
 
         <form onSubmit={handleSubmit}>
 
           <div className="mb-3">
-            <label className="form-label text-muted fw-semibold" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-muted fw-semibold text-sm">
               Nombre Completo
             </label>
             <div className="input-group">
@@ -94,7 +83,7 @@ const Registro = () => {
 
 
           <div className="mb-3">
-            <label className="form-label text-muted fw-semibold" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-muted fw-semibold text-sm">
               Correo Electrónico
             </label>
             <div className="input-group">
@@ -113,7 +102,7 @@ const Registro = () => {
 
 
           <div className="mb-3">
-            <label className="form-label text-muted fw-semibold" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-muted fw-semibold text-sm">
               Contraseña
             </label>
             <div className="input-group">
@@ -132,7 +121,7 @@ const Registro = () => {
 
 
           <div className="mb-4">
-            <label className="form-label text-muted fw-semibold" style={{ fontSize: '0.85rem' }}>
+            <label className="form-label text-muted fw-semibold text-sm">
               Confirmar Contraseña
             </label>
             <div className="input-group">
@@ -151,17 +140,15 @@ const Registro = () => {
 
           <button 
             type="submit" 
-            className="btn text-white w-100 py-2 fw-semibold mb-3" 
-            style={{ backgroundColor: colorRosa, borderRadius: '0.5rem' }}
+            className="btn-primary w-100 py-2 fw-semibold mb-3"
           >
             Registrarse
           </button>
         </form>
 
-
         <div className="text-center mb-2">
-          <span className="text-muted" style={{ fontSize: '0.9rem' }}>¿Ya tienes cuenta? </span>
-          <Link to="/login" className="text-decoration-none fw-semibold" style={{ color: colorRosa, fontSize: '0.9rem' }}>
+          <span className="text-muted text-muted-sm">¿Ya tienes cuenta? </span>
+          <Link to="/login" className="link-primary-accent fw-semibold text-muted-sm">
             Inicia Sesión
           </Link>
         </div>
