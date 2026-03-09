@@ -59,6 +59,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const stateGlobal = {
+    user,
     token,
     logout,
     auth,

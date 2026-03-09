@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { NavLink, useNavigate, useLocation } from "react-router-dom"
 import { useUser } from "../context/UserContext"
 import { useCart } from "../context/CartContext"
+import { useAuth } from "../hooks/useAuth"
 
 const optionsByRole = {
   Administrador: [
@@ -16,26 +17,25 @@ const optionsByRole = {
 const mockAdmin = { name: 'Administrador', role: 'Administrador' };
 
 function Navbar() {
-  const { token, getProfile, logout } = useUser();
-  const { cart } = useCart();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user, isAdmin, isLoggedIn } = useAuth()
 
-  const isAdminRoute = location.pathname.startsWith('/admin');
-  const user = getProfile() || (isAdminRoute ? mockAdmin : null);
-  const isLoggedIn = !!token || isAdminRoute;
+  const { logout } = useUser()
+  const { cart } = useCart()
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const isAdminRoute = location.pathname.startsWith('/admin')
 
   const cartCount = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.quantity, 0);
-  }, [cart]);
+    return cart.reduce((acc, item) => acc + item.quantity, 0)
+  }, [cart])
 
   const cartTotal = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  }, [cart]);
+    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  }, [cart])
 
   const options = useMemo(() => user ? (optionsByRole[user.role] || []) : [], [user]);
-  // const mainOptions = useMemo(() => options.filter((option) => option.position === 'center'), [options]);
-  // const rightOptions = useMemo(() => options.filter((option) => option.position !== 'center'), [options]);
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm px-4">
@@ -57,23 +57,30 @@ function Navbar() {
       <div className="d-flex gap-4 align-items-center">
       
           {/* Menu derecho: carrito */}
-        <NavLink className="nav-link d-flex align-items-center gap-2" to="/cart">
-          <div className="position-relative">
-            <i className="bi bi-cart fs-5"></i>
-            {cartCount > 0 && (
-                <span className="cart-badge">
-                  {cartCount}
+          <NavLink
+            className={`nav-link d-flex align-items-center gap-2 ${isAdmin ? "disabled opacity-50" : ""}`}
+            to={isAdmin ? "#" : "/cart"}
+            onClick={(e) => {
+              if (isAdmin) e.preventDefault()
+            }}
+            title={isAdmin ? "Los administradores no pueden comprar" : ""}
+          >
+            <div className="position-relative">
+              <i className="bi bi-cart fs-5"></i>
+              {cartCount > 0 && (
+                  <span className="cart-badge">
+                    {cartCount}
+                  </span>
+              )}
+            </div>
+
+              {cartTotal > 0 && (
+                <span className="fw-bold">
+                  ${cartTotal.toLocaleString('es-CL')}
                 </span>
-            )}
-          </div>
+              )}
 
-            {cartTotal > 0 && (
-              <span className="fw-bold">
-                ${cartTotal.toLocaleString('es-CL')}
-              </span>
-            )}
-
-        </NavLink>
+          </NavLink>
 
           {/* Menu derecho: inicio sesion */}
         {isLoggedIn ? (

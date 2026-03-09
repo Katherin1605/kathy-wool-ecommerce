@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../hooks/useAuth"
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductDetails = () => {
-    const [liked, setLiked] = useState(false);
-    const { id } = useParams();
+    const { id } = useParams()
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { addToCart } = useCart();
+    const [liked, setLiked] = useState(false);
     const [quantity, setQuantity] = useState(1);
-
-
+        
+    const { addToCart } = useCart();
+    const { isAdmin } = useAuth()
+    
     useEffect(() => {
         const getProduct = async () => {
             try {
@@ -33,6 +35,7 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         console.log(quantity);
+        if (isAdmin) return
         addToCart({
             id: id,
             name: product.name,
@@ -108,15 +111,21 @@ const ProductDetails = () => {
 
                     <button
                         onClick={handleAddToCart}
-                        type="button"
                         className="btn-add-cart mb-3"
                         aria-label="Agregar al carrito"
+                        disabled={isAdmin}
                     >
                         <i className="bi bi-cart me-2" aria-hidden></i>
                         Agregar al Carrito
                     </button>
+                    
+                    {isAdmin && (
+                        <small className="text-muted d-block mb-3">
+                            Modo administrador: compras deshabilitadas
+                        </small>
+                    )}
 
-                    <hr></hr>
+                    <hr/>
 
                     <div className='d-flex justify-content-evenly'>
 
