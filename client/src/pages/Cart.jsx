@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext"
+import { useCartTotals } from "../hooks/useCartTotals";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -8,7 +9,8 @@ const Cart = () => {
 
     const navigate = useNavigate();
 
-    const { cart, total, incrementQuantity, decrementQuantity } = useCart();
+    const { cart, incrementQuantity, decrementQuantity } = useCart();
+    const { subtotal } = useCartTotals();
 
     const { token } = useUser()
     const isLoggedIn = !!token
@@ -67,7 +69,7 @@ const Cart = () => {
                 </div>
             ))}
 
-            <h4 className="mt-4">Total: ${total.toFixed(2)}</h4>
+            <h4 className="mt-4">Total: ${subtotal.toFixed(2)}</h4>
 
             <button
                 className={`btn mt-3 ${isLoggedIn ? "btn-cart-primary" : "btn-secondary"}`}

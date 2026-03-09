@@ -1,8 +1,8 @@
-import { useMemo } from "react"
 import { NavLink, useNavigate, useLocation } from "react-router-dom"
+import { useMemo } from "react"
 import { useUser } from "../context/UserContext"
-import { useCart } from "../context/CartContext"
 import { useAuth } from "../hooks/useAuth"
+import { useCartTotals } from "../hooks/useCartTotals"
 
 const optionsByRole = {
   Administrador: [
@@ -18,22 +18,21 @@ const mockAdmin = { name: 'Administrador', role: 'Administrador' };
 
 function Navbar() {
   const { user, isAdmin, isLoggedIn } = useAuth()
-
   const { logout } = useUser()
-  const { cart } = useCart()
+  const { items, subtotal } = useCartTotals()
 
   const navigate = useNavigate()
   const location = useLocation()
 
   const isAdminRoute = location.pathname.startsWith('/admin')
 
-  const cartCount = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.quantity, 0)
-  }, [cart])
+  // const cartCount = useMemo(() => {
+  //   return cart.reduce((acc, item) => acc + item.quantity, 0)
+  // }, [cart])
 
-  const cartTotal = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  }, [cart])
+  // const cartTotal = useMemo(() => {
+  //   return cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  // }, [cart])
 
   const options = useMemo(() => user ? (optionsByRole[user.role] || []) : [], [user]);
 
@@ -60,24 +59,22 @@ function Navbar() {
           <NavLink
             className={`nav-link d-flex align-items-center gap-2 ${isAdmin ? "disabled opacity-50" : ""}`}
             to={isAdmin ? "#" : "/cart"}
-            onClick={(e) => {
-              if (isAdmin) e.preventDefault()
-            }}
+            onClick={(e) => {if (isAdmin) e.preventDefault()}}
             title={isAdmin ? "Los administradores no pueden comprar" : ""}
           >
             <div className="position-relative">
               <i className="bi bi-cart fs-5"></i>
-              {cartCount > 0 && (
-                  <span className="cart-badge">
-                    {cartCount}
-                  </span>
+              {items > 0 && (
+                <span className="cart-badge">
+                  {items}
+                </span>
               )}
             </div>
 
-              {cartTotal > 0 && (
-                <span className="fw-bold">
-                  ${cartTotal.toLocaleString('es-CL')}
-                </span>
+              {subtotal > 0 && (
+              <span className="fw-bold">
+                ${subtotal.toLocaleString('es-CL')}
+              </span>
               )}
 
           </NavLink>
