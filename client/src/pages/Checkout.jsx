@@ -1,15 +1,21 @@
 import { useState } from "react"
 import { useUser } from "../context/UserContext"
 import { useCart } from "../context/CartContext"
+import { useCartTotals } from "../hooks/useCartTotals"
 import { useNavigate } from "react-router-dom"
 
 function Checkout() {
     const { token, getProfile } = useUser()
     const { cart, clearCart } = useCart()
+    const { subtotal } = useCartTotals()
+    
     const user = getProfile()
     const isLoggedIn = !!token
+    const isAdmin = user?.role === "Administrador"
+    
     const [orderNumber, setOrderNumber] = useState(null)
     const [orderItems, setOrderItems] = useState([])
+    
     const navigate = useNavigate()
 
     // para generar un número de pedido
@@ -18,7 +24,6 @@ function Checkout() {
     }
 
         // para mostrar el total del carrito
-    const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
     const handleCheckout = () => {
         const newOrder = generateOrderNumber()
 
@@ -44,14 +49,14 @@ function Checkout() {
                         </div>
                     ))}
                     <h5 className="mt-3">
-                        Total: ${cartTotal.toLocaleString("es-CL")}
+                        Total: ${subtotal.toLocaleString("es-CL")}
                     </h5>
 
                 </div>
             )}
 
             {/* mensaje si no está loggeado */}
-            {!isLoggedIn && (
+            {isAdmin && !orderNumber && (
                 <div className="alert alert-warning mt-4"> Debe iniciar sesión o registrarse antes de continuar con la compra</div>
             )}
 
@@ -59,7 +64,7 @@ function Checkout() {
             {!orderNumber && (
                 <button
                     className="btn btn-primary mt-4"
-                    disabled={!isLoggedIn || cart.length === 0}
+                    disabled={!isLoggedIn || cart.length === 0 || isAdmin}
                     onClick={handleCheckout}
                 >
                     Ir a pagar
@@ -82,25 +87,25 @@ function Checkout() {
                     <h4 className="mb-3">Detalle de la compra</h4>
 
                     {orderItems.map((item) => (
-                    <div
-                        key={item.id}
-                        className="d-flex justify-content-between border-bottom py-2"
-                    >
-                        <span>
-                        {item.name} x {item.quantity}
-                        </span>
+                        <div
+                            key={item.id}
+                            className="d-flex justify-content-between border-bottom py-2"
+                        >
+                            <span>
+                            {item.name} x {item.quantity}
+                            </span>
 
-                        <span>
-                        ${(item.price * item.quantity).toLocaleString("es-CL")}
-                        </span>
-                    </div>
+                            <span>
+                            ${(item.price * item.quantity).toLocaleString("es-CL")}
+                            </span>
+                        </div>
                     ))}
 
                     <h5 className="mt-3">
-                    Total pagado: $
-                    {orderItems
-                        .reduce((acc, item) => acc + item.price * item.quantity, 0)
-                        .toLocaleString("es-CL")}
+                        Total pagado: $
+                        {orderItems
+                            .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                            .toLocaleString("es-CL")}
                     </h5>
 
                 </div>

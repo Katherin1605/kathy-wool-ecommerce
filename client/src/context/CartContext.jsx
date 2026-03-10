@@ -1,22 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
-//si agregamos useLocalStorage: import {useLocalStorage} from '../hooks/useLocalStorage';
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 
   // cargar carrito desde localStorage (que no se borre cuando actualiza)
-    const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem("cart");
-        return savedCart ? JSON.parse(savedCart) : [];
-    });
+    const [cart, setCart] = useLocalStorage("cart", [])
 
     const [total, setTotal] = useState(0);
-
-    // guardar carrito en localStorage cuando cambie
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
 
     useEffect(() => {
         const suma = cart.reduce(
@@ -40,7 +32,6 @@ export const CartProvider = ({ children }) => {
         }
 
 //agregar removeFromCart
-
         return [...prevCart, { ...product, quantity: 1 }];
         });
     };
@@ -68,7 +59,6 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => setCart([]);
 
-    //agregar en value: 
     return (
         <CartContext.Provider
         value={{

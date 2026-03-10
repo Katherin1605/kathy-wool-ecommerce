@@ -116,7 +116,7 @@ const ProductDetails = () => {
                         Agregar al Carrito
                     </button>
 
-                    <hr></hr>
+                    <hr/>
 
                     <div className='d-flex justify-content-evenly'>
 

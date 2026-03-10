@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const UserContext = createContext();
 
@@ -11,20 +11,35 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user")
+    return storedUser ? JSON.parse(storedUser) : null
+  })
   const [users, setUsers] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [email, setEmail] = useState(localStorage.getItem('email'));
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [email, setEmail] = useState(() => localStorage.getItem('email'));
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const register = (name, userEmail, password, role = 'Cliente') => {
     const newUser = { id: Date.now(), name, email: userEmail, password, role };
     const fakeToken = `token_${Date.now()}`;
+    
     setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
     setToken(fakeToken);
     setEmail(userEmail);
+    
     localStorage.setItem('token', fakeToken);
     localStorage.setItem('email', userEmail);
+    localStorage.setItem("user", JSON.stringify(newUser));
+    
     return newUser;
   };
 
@@ -33,38 +48,36 @@ export const UserProvider = ({ children }) => {
     setUser(userData);
     setToken(fakeToken);
     setEmail(userData.email);
+
     localStorage.setItem('token', fakeToken);
     localStorage.setItem('email', userData.email);
+    localStorage.setItem("user", JSON.stringify(userData));
+
     return userData;
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem("user");
     localStorage.removeItem('email');
     setToken(null);
     setEmail(null);
     setUser(null);
   };
 
-  const getProfile = () => {
-    if (user) return user;
-    if (email) {
-      return { email };
-    }
-    return null;
-  };
-
   const updateProfile = (updatedData) => {
-    setUser((prev) => ({ ...prev, ...updatedData }));
+    const updatedUser = { ...user, ...updatedData };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
   const stateGlobal = {
+    user,
     token,
     logout,
     auth,
     register,
     email,
-    getProfile,
     updateProfile
   };
 

@@ -28,6 +28,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.get(API_URL, { params: { email, password } });
+      console.log("Respuesta API:", data);
       if (data.length > 0) {
         const user = data[0];
         auth(user);
