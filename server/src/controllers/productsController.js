@@ -1,8 +1,9 @@
 import { getProducts, getProductById } from '../models/productsModel.js';
 
 export const fetchProducts = async (req, res) => {
+    const {order_by, limit, page, category_id} = req.query;
     try {
-        const products = await getProducts();
+        const products = await getProducts({order_by, limit, page, category_id});
         res.json(products);
     } catch (error) {
         console.error('Error fetching products:', error);
