@@ -9,3 +9,17 @@ export const getProducts = async () => {
         throw error;
     }
 };
+
+export const getProductById = async (id) => {
+    const consultaSQL = {
+        text: 'SELECT * FROM products WHERE id = $1',
+        values: [id]
+    };
+    try {
+        const res = await pool.query(consultaSQL);
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error fetching product by ID:', error);
+        throw error;
+    }
+};
