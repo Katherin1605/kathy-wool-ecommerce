@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCart } from "../context/CartContext";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useAuth } from "../hooks/useAuth"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductCard = (props) => {
-    const [liked, setLiked] = useState(false);
-    const { id, name, price, image, stars } = props
-    const navigate = useNavigate();
 
+    const { id, name, price, image, stars } = props
+    const [liked, setLiked] = useState(false);
     const { addToCart } = useCart();
+    const { isAdmin } = useAuth()
+    const navigate = useNavigate();
 
     const toggleLike = () => {
         setLiked(!liked);
@@ -81,10 +82,17 @@ const ProductCard = (props) => {
                         type="button"
                         className="btn-add-cart"
                         aria-label="Agregar al carrito"
+                        disabled={isAdmin}
                     >
                         <i className="bi bi-cart me-2" aria-hidden></i>
                         Agregar al Carrito
                     </button>
+
+                    {isAdmin && (
+                        <small className="text-muted d-block mt-2">
+                            Modo administrador: compras deshabilitadas
+                        </small>
+                    )}
 
                     <button
                         onClick={() => handleViewDetails(id)}
