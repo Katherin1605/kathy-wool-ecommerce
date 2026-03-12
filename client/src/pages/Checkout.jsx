@@ -5,11 +5,11 @@ import { useCartTotals } from "../hooks/useCartTotals"
 import { useNavigate } from "react-router-dom"
 
 function Checkout() {
-    const { token, getProfile } = useUser()
+    const { token, user } = useUser()
     const { cart, clearCart } = useCart()
     const { subtotal } = useCartTotals()
     
-    const user = getProfile()
+    // const user = getProfile()
     const isLoggedIn = !!token
     const isAdmin = user?.role === "Administrador"
     

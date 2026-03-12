@@ -1,7 +1,7 @@
 import {getCartByUser, createCartIfNotExists, getActiveCart, addProductToCart, updateCartItem, removeProductFromCart} from "../models/cartModel.js";
 
 // Para obtener el carrito
-export const fetchCart = async (req,res) => {
+export const fetchCartController = async (req,res) => {
 
     const { userId } = req.params
 
@@ -20,7 +20,7 @@ export const fetchCart = async (req,res) => {
 
 
 // Para agregar producto al carrito
-export const addToCart = async (req, res) => {
+export const addToCartController = async (req, res) => {
 
     const { userId, productId } = req.body;
 
@@ -46,7 +46,7 @@ export const addToCart = async (req, res) => {
 };
 
 // Para actualziar cantidad en el carrito
-export const updateCartItem = async (req, res) => {
+export const updateCartItemController = async (req, res) => {
 
     const { userId, productId, amount } = req.body;
 
@@ -54,9 +54,17 @@ export const updateCartItem = async (req, res) => {
 
         const cart = await getActiveCart(userId);
 
-        await updateProductQuantity(cart.cart_id, productId, amount);
+        if (!cart) {
+            return res.status(404).json({
+                error: "No existe un carrito activo para este usuario"
+            });
+        }
 
-        res.json({ message: "Cantidad actualizada exitosamente" });
+        await updateCartItem(cart.cart_id, productId, amount);
+
+        res.json({
+            message: "Cantidad actualizada exitosamente"
+        });
 
     } catch (error) {
 
@@ -67,7 +75,7 @@ export const updateCartItem = async (req, res) => {
 };
 
 // Para eliminar el producto
-export const removeFromCart = async (req, res) => {
+export const removeFromCartController = async (req, res) => {
 
     const { userId, productId } = req.body;
 
