@@ -1,14 +1,18 @@
 import { Router } from "express"
-import { fetchCart, addToCart, updateCartItem, removeFromCart } from "../src/controllers/cartController.js"
+import { fetchCartController, addToCartController, updateCartItemController, removeFromCartController } from "../src/controllers/cartController.js"
 
 const router = Router()
 
-    router.get("/cart/:userId", fetchCart);
+//obtener carrito
+    router.get("/cart/:userId", fetchCartController);
 
-    router.post("/cart/add", addToCart);
+//agregar producto
+    router.post("/cart/add", addToCartController);
 
-    router.put("/cart/update", updateCartItem);
+//actualizar cantidad
+    router.put("/cart/update", updateCartItemController);
 
-    router.delete("/cart/remove", removeFromCart);
+//eliminar producto
+    router.delete("/cart/remove", removeFromCartController);
 
 export default router

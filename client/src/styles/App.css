@@ -955,3 +955,32 @@ min-width: 220px;
     font-size: 1rem;
     text-align: center;
 }
+
+
+/* Not Found */
+.notfound-container {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.notfound-img {
+    max-width: 300px;
+}
+
+.notfound-title {
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+.notfound-text {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.notfound-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+}
