@@ -28,15 +28,11 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const register = (name, userEmail, password, role = 'Cliente') => {
-    const newUser = { id: Date.now(), name, email: userEmail, password, role };
-    const fakeToken = `token_${Date.now()}`;
+    const newUser = { name, email: userEmail, role };
     
-    setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
-    setToken(fakeToken);
     setEmail(userEmail);
     
-    localStorage.setItem('token', fakeToken);
     localStorage.setItem('email', userEmail);
     localStorage.setItem("user", JSON.stringify(newUser));
     
@@ -44,12 +40,12 @@ export const UserProvider = ({ children }) => {
   };
 
   const auth = (userData) => {
-    const fakeToken = `token_${Date.now()}`;
+    const realToken = userData.token;
     setUser(userData);
-    setToken(fakeToken);
+    setToken(realToken);
     setEmail(userData.email);
 
-    localStorage.setItem('token', fakeToken);
+    localStorage.setItem('token', realToken);
     localStorage.setItem('email', userData.email);
     localStorage.setItem("user", JSON.stringify(userData));
 
