@@ -3,8 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import productsRoutes from "./routes/productsRoutes.js";
 import categoriesRoutes from "./routes/categoriesRoutes.js";
-import cartRoutes from "../routes/cartRoutes.js";
-import checkoutRoutes from "../routes/checkoutRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import checkoutRoutes from "./routes/checkoutRoutes.js";
 
 dotenv.config();
 

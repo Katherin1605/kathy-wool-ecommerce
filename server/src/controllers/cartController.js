@@ -1,4 +1,4 @@
-import {getCartByUser, createCartIfNotExists, getActiveCart, addProductToCart, updateProductQuantity, removeProductFromCart} from "../models/cartModel.js";
+import {getCartByUser, createCartIfNotExists, getActiveCart, addProductToCart, updateCartItem, removeProductFromCart} from "../models/cartModel.js";
 
 // Para obtener el carrito
 export const fetchCart = async (req,res) => {
