@@ -1,20 +1,23 @@
 import axios from "axios";
-
-useEffect(() => {
-
-  const fetchOrders = async () => {
-
-    const res = await axios.get("/users/me/orders")
-
-    setOrders(res.data)
-
-  }
-
-  fetchOrders()
-
-}, [])
+import { useEffect, useState } from "react";
 
 const MyOrders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+
+    const fetchOrders = async () => {
+
+      const res = await axios.get("/users/me/orders")
+
+      setOrders(res.data)
+
+    }
+
+    fetchOrders()
+
+  }, []);
+
   return (
     <div>
       <h3 className="fw-bold text-heading mb-4">Mis Pedidos</h3>
