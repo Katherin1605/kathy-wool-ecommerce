@@ -36,8 +36,8 @@ const ProductDetails = () => {
         addToCart({
             id: id,
             name: product.name,
-            price: product.priceDetails,
-            image: product.image,
+            price: product.price,
+            image: product.url_image,
             quantity: quantity
         });
     };
