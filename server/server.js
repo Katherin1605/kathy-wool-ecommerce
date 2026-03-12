@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import productsRoutes from "./routes/productsRoutes.js";
 import categoriesRoutes from "./routes/categoriesRoutes.js";
+import cartRoutes from "../routes/cartRoutes.js";
+import checkoutRoutes from "../routes/checkoutRoutes.js";
 
 dotenv.config();
 
@@ -12,6 +14,8 @@ app.use(cors());
 app.use(express.json());
 app.use(productsRoutes);
 app.use(categoriesRoutes);
+app.use("/api", cartRoutes);
+app.use("/api", checkoutRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "API funcionando 🚀" });

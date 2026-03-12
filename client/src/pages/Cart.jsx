@@ -9,7 +9,7 @@ const Cart = () => {
 
     const navigate = useNavigate();
 
-    const { cart, incrementQuantity, decrementQuantity } = useCart();
+    const { cart, incrementQuantity, decrementQuantity, removeFromCart } = useCart();
     const { subtotal } = useCartTotals();
 
     const { token } = useUser()
@@ -29,8 +29,8 @@ const Cart = () => {
             {cart.map((item) => (
                 
                 <div
-                key={item.id}
-                className="d-flex justify-content-between align-items-center border-bottom py-3"
+                    key={item.id}
+                    className="d-flex justify-content-between align-items-center border-bottom py-3"
                 >
                     <div className="d-flex align-items-center">
                     
@@ -47,25 +47,32 @@ const Cart = () => {
 
                     </div>
 
-                <div>
+                    <div>
 
-                    <button
-                        className="btn btn-outline-danger btn-sm"
-                        onClick={() => decrementQuantity(item.id)}
-                    >
-                        <i className="bi bi-dash"></i>
-                    </button>
+                        <button
+                            className="btn btn-outline-danger btn-sm"
+                            onClick={() => decrementQuantity(item.id)}
+                        >
+                            <i className="bi bi-dash"></i>
+                        </button>
 
-                    <span className="mx-3">{item.quantity}</span>
+                        <span className="mx-3">{item.quantity}</span>
 
-                    <button
-                        className="btn btn-outline-success btn-sm"
-                        onClick={() => incrementQuantity(item.id)}
-                    >
-                        <i className="bi bi-plus"></i>
-                    </button>
+                        <button
+                            className="btn btn-outline-success btn-sm"
+                            onClick={() => incrementQuantity(item.id)}
+                        >
+                            <i className="bi bi-plus"></i>
+                        </button>
 
-                </div>
+                        <button
+                            className="btn btn-outline-danger btn-sm ms-3"
+                            onClick={() => removeFromCart(item.id)}
+                        >
+                            <i className="bi bi-trash"></i>
+                        </button>
+                        
+                    </div>
                 </div>
             ))}
 
