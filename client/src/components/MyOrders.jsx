@@ -1,3 +1,19 @@
+import axios from "axios";
+
+useEffect(() => {
+
+  const fetchOrders = async () => {
+
+    const res = await axios.get("/users/me/orders")
+
+    setOrders(res.data)
+
+  }
+
+  fetchOrders()
+
+}, [])
+
 const MyOrders = () => {
   return (
     <div>

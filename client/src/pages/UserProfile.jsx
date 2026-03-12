@@ -1,6 +1,22 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+
+useEffect(() => {
+
+  const fetchUser = async () => {
+
+    const res = await axios.get("/users/me")
+
+    setUser(res.data)
+
+  }
+
+  fetchUser()
+
+}, [])
 
 const UserProfile = () => {
     const { getProfile, updateProfile } = useUser();

@@ -1,6 +1,6 @@
 import pool from "../../db/config.js"
 
-export const findUserById = async (id) => {
+export const findUserById = async (userId) => {
 
   const query = `
     SELECT id, name, email
@@ -8,7 +8,7 @@ export const findUserById = async (id) => {
     WHERE id = $1
   `
 
-  const { rows } = await pool.query(query, [id])
+  const { rows } = await pool.query(query, [userId])
 
   return rows[0]
 
@@ -25,6 +25,17 @@ export const findOrdersByUser = async (userId) => {
   const { rows } = await pool.query(query, [userId])
 
   return rows
+
+}
+
+export const addFavorite = async (userId, productId) => {
+
+  const query = `
+    INSERT INTO favorites (user_id, product_id)
+    VALUES ($1, $2)
+  `
+
+  await pool.query(query, [userId, productId])
 
 }
 

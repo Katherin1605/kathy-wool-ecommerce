@@ -17,4 +17,6 @@ const pool = new pg.Pool({
   allowExitOnIdle: true
 });
 
+
+
 export default pool;

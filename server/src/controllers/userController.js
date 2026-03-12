@@ -12,6 +12,8 @@ export const getUserProfile = async (req, res) => {
 
   } catch (error) {
 
+    console.error(error)
+
     res.status(500).json({ error: "Error obteniendo usuario" })
 
   }
@@ -22,13 +24,15 @@ export const getUserOrders = async (req, res) => {
 
   try {
 
-    const userId = req.user.id
+    const userId = 1 //req.user.id. TODO: Implementar autenticación para obtener el ID del usuario logueado
 
     const orders = await userModel.findOrdersByUser(userId)
 
     res.json(orders)
 
   } catch (error) {
+
+    console.error(error)
 
     res.status(500).json({ error: "Error obteniendo pedidos" })
 
@@ -49,6 +53,8 @@ export const addFavorite = async (req, res) => {
 
   } catch (error) {
 
+    console.error(error)
+
     res.status(500).json({ error: "Error agregando favorito" })
 
   }
@@ -67,6 +73,8 @@ export const removeFavorite = async (req, res) => {
     res.json({ message: "Favorito eliminado" })
 
   } catch (error) {
+
+    console.error(error)
 
     res.status(500).json({ error: "Error eliminando favorito" })
 

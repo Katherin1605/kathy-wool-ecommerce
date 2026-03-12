@@ -1,3 +1,19 @@
+import axios from "axios";
+
+const addFavorite = async (productId) => {
+
+  await axios.post("/users/me/favorites", {
+    productId
+  })
+
+}
+
+const removeFavorite = async (productId) => {
+
+  await axios.delete(`/users/me/favorites/${productId}`)
+
+}
+
 const MyFavorites = () => {
   return (
     <div>
