@@ -26,12 +26,29 @@ export const addToCartController = async (req, res) => {
 
     try {
 
+        //busca carrito activo
         let cart = await getActiveCart(userId);
 
         if (!cart) {
             cart = await createCartIfNotExists(userId);
         }
 
+        //verifica que haya stock de producto
+        const product = await getProductById(productId);
+
+        if (!product) {
+            return res.status(404).json({
+                error: "Producto no encontrado"
+            });
+        }
+
+        if (product.stock <= 0) {
+            return res.status(400).json({
+                error: "Producto sin stock disponible"
+            });
+        }
+
+        //agrega producto al carrito
         await addProductToCart(cart.cart_id, productId);
 
         res.json({ message: "Producto agregado al carrito" });
@@ -82,6 +99,12 @@ export const removeFromCartController = async (req, res) => {
     try {
 
         const cart = await getActiveCart(userId);
+
+        if (!cart) {
+            return res.status(404).json({
+                error: "No existe un carrito activo para este usuario"
+            });
+        }
 
         await removeProductFromCart(cart.cart_id, productId);
 
