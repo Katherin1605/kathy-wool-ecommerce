@@ -1,20 +1,18 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
-
-const env_host = process.env.DB_HOST;
-const env_user = process.env.USER;
-const env_password = process.env.DB_PASSWORD;
-const env_database = process.env.DB_NAME;
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const pool = new pg.Pool({
-    host: env_host,
-    user: env_user,
-    password: env_password,
-    database: env_database,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT,
     allowExitOnIdle: true
 });
 
-export default pool ;
+export default pool;

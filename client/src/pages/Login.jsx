@@ -5,7 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const API_URL = 'https://69a9119832e2d46caf45190f.mockapi.io/api/v1/users';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const Login = () => {
   const { auth } = useUser();
@@ -27,21 +27,16 @@ const Login = () => {
     }
 
     try {
-      const { data } = await axios.get(API_URL, { params: { email, password } });
-      console.log("Respuesta API:", data);
-      if (data.length > 0) {
-        const user = data[0];
-        auth(user);
-        if (user.role === 'Administrador') {
-          navigate('/admin');
-        } else {
-          navigate(from);
-        }
+      const { data } = await axios.post(`${API_URL}/auth/login`, { email, password });
+      const { token, user } = data;
+      auth({ ...user, token });
+      if (user.role === 'admin') {
+        navigate('/admin');
       } else {
-        setError('Correo o contraseña incorrectos');
+        navigate('/');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al iniciar sesión. Intenta de nuevo.');
+      setError(err.response?.data?.message || 'Correo o contraseña incorrectos');
     }
   };
 
