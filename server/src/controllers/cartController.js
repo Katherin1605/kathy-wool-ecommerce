@@ -1,4 +1,5 @@
 import {getCartByUser, createCartIfNotExists, getActiveCart, addProductToCart, updateCartItem, removeProductFromCart} from "../models/cartModel.js";
+import { getProductById } from "../models/productsModel.js";
 
 // Para obtener el carrito
 export const fetchCartController = async (req,res) => {
@@ -53,10 +54,20 @@ export const addToCartController = async (req, res) => {
 
         res.json({ message: "Producto agregado al carrito" });
 
-    } catch (error) {
+    // } catch (error) {
+
+    //     console.error(error);
+    //     res.status(500).json({ error: "Error agregando producto" });
+
+    // }
+
+        } catch (error) {
 
         console.error(error);
-        res.status(500).json({ error: "Error agregando producto" });
+
+        res.status(500).json({
+            error: error.message
+        });
 
     }
 
