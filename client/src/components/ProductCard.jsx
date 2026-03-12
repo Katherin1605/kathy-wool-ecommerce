@@ -54,7 +54,7 @@ const ProductCard = (props) => {
                         <div className='col p-2'>
 
                             <p className="card-text price-text mb-0">
-                                ${Number(price).toFixed(2)}
+                                ${Intl.NumberFormat('es-CL').format(price)}
                             </p>
 
                         </div>
