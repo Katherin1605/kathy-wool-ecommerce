@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-useEffect(() => {
-
-  const fetchUser = async () => {
-
-    const res = await axios.get("/users/me")
-
-    setUser(res.data)
-
-  }
-
-  fetchUser()
-
-}, [])
-
 const UserProfile = () => {
+
+    useEffect(() => {
+
+        const fetchUser = async () => {
+
+            const res = await axios.get("/users/me");
+
+            setUser(res.data)
+
+        }
+
+        fetchUser()
+
+    }, []);
+    
     const { getProfile, updateProfile } = useUser();
     const navigate = useNavigate();
     const user = getProfile();
