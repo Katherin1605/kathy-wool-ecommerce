@@ -24,13 +24,32 @@ function Checkout() {
     }
 
         // para mostrar el total del carrito
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
+
         const newOrder = generateOrderNumber()
 
-        setOrderItems(cart)   // guardar productos comprados
-        setOrderNumber(newOrder)
+        try {
 
-        clearCart()
+            await fetch("/api/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: user.user_id
+                })
+            })
+
+            setOrderItems(cart)
+            setOrderNumber(newOrder)
+
+            clearCart()
+
+        } catch (error) {
+
+            console.error("Error en checkout", error)
+
+        }
     }
 
     return (

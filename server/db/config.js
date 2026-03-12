@@ -9,6 +9,8 @@ const env_password = process.env.DB_PASSWORD;
 const env_database = process.env.DB_NAME;
 
 
+
+
 const pool = new pg.Pool({
   connectionString: process.env.DB_URL,
   ssl: {
