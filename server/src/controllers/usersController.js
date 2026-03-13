@@ -1,4 +1,4 @@
-import { createUserModel } from "../models/usersModel.js";
+import { createUserModel, findUserById, findOrdersByUser, addFavorite, removeFavorite } from "../models/usersModel.js";
 
 export const registerUser = async (req, res) => {
   try{
@@ -17,7 +17,7 @@ export const getUserProfile = async (req, res) => {
 
     const userId = req.user.id
 
-    const user = await userModel.findUserById(userId)
+    const user = await findUserById(userId)
 
     res.json(user)
 
@@ -37,7 +37,7 @@ export const getUserOrders = async (req, res) => {
 
     const userId = 1 //req.user.id. TODO: Implementar autenticación para obtener el ID del usuario logueado
 
-    const orders = await userModel.findOrdersByUser(userId)
+    const orders = await findOrdersByUser(userId)
 
     res.json(orders)
 
@@ -58,7 +58,7 @@ export const addFavorite = async (req, res) => {
     const userId = req.user.id
     const { productId } = req.body
 
-    await userModel.addFavorite(userId, productId)
+    await addFavorite(userId, productId)
 
     res.json({ message: "Producto agregado a favoritos" })
 
@@ -79,7 +79,7 @@ export const removeFavorite = async (req, res) => {
     const userId = req.user.id
     const { productId } = req.params
 
-    await userModel.removeFavorite(userId, productId)
+    await removeFavorite(userId, productId)
 
     res.json({ message: "Favorito eliminado" })
 
