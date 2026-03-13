@@ -8,7 +8,7 @@ const BestProducts = () => {
     const [bestProducts, setBestProducts] = useState([]);
 
 
-    const API_URL = "https://69a63feefeb94223b31c819b.mockapi.io/api/v1/products";
+    const API_URL = "http://localhost:3000/best-products";
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,11 +35,11 @@ const BestProducts = () => {
             <div className="d-flex justify-content-center">
                 {bestProducts.map((product) => (
                     <ProductCard
-                        key={product.id}
-                        id={product.id}
+                        key={product.product_id}
+                        id={product.product_id}
                         name={product.name}
-                        price={product.priceDetails}
-                        image={product.image}
+                        price={product.price}
+                        image={product.url_image}
                         stars={product.stars}
                     />
                 ))}

@@ -8,12 +8,12 @@ export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page 
         let formattedQuery;
         if (category_id > 0) {
             formattedQuery = format(
-                'SELECT * FROM products WHERE category_id = %s ORDER BY %s %s LIMIT %s OFFSET %s',
+                'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id HAVING p.category_id = %s ORDER BY %s %s LIMIT %s OFFSET %s',
                 category_id, column, direction, limit, offset
             );
         } else {
             formattedQuery = format(
-                'SELECT * FROM products ORDER BY %s %s LIMIT %s OFFSET %s',
+                'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id ORDER BY %s %s LIMIT %s OFFSET %s',
                 column, direction, limit, offset);
             }
         const res = await pool.query(formattedQuery);
@@ -37,3 +37,15 @@ export const getProductById = async (id) => {
         throw error;
     }
 };
+
+export const getBestProducts = async () => {
+    const consultaSQL = 'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id ORDER BY stars DESC LIMIT 3';
+    try {
+        const res = await pool.query(consultaSQL);
+
+        return res.rows;
+    } catch (error) {
+        console.error('Error fetching best products:', error);
+        throw error;
+    }
+}
