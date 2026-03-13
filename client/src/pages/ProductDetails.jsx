@@ -16,7 +16,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const response = await axios.get(`https://69a63feefeb94223b31c819b.mockapi.io/api/v1/products/${id}`);
+                const response = await axios.get(`http://localhost:3000/products/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error("Error al obtener el producto", error);
@@ -50,7 +50,7 @@ const ProductDetails = () => {
         <div>
             <div className='row m-4'>
                 <div className='col-auto'>
-                    <img src={product.image} alt={product.name} className='rounded-5' />
+                    <img src={product.url_image} alt={product.name} className='rounded-5' />
                 </div>
 
                 <div className='col'>
@@ -73,7 +73,7 @@ const ProductDetails = () => {
                         ))
                         }
                     </strong></p>
-                    <p className='price' style={{ fontSize: '25px' }}>${product.priceDetails}</p>
+                    <p className='price' style={{ fontSize: '25px' }}>${product.price}</p>
                     <p>{product.description}</p>
 
                     <div className='detail-specifications'>

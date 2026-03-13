@@ -26,7 +26,7 @@ export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page 
 
 export const getProductById = async (id) => {
     const consultaSQL = {
-        text: 'SELECT * FROM products WHERE product_id = $1',
+        text: 'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id HAVING p.product_id = $1',
         values: [id]
     };
     try {
