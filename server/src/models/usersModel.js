@@ -49,7 +49,7 @@ export const findOrdersByUser = async (userId) => {
 
 }
 
-export const addFavorite = async (userId, productId) => {
+export const addFavoriteModel = async (userId, productId) => {
 
   const query = `
     INSERT INTO favorites (user_id, product_id)
@@ -60,7 +60,7 @@ export const addFavorite = async (userId, productId) => {
 
 }
 
-export const removeFavorite = async (userId, productId) => {
+export const removeFavoriteModel = async (userId, productId) => {
 
   const query = `
     DELETE FROM favorites

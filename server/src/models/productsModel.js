@@ -48,4 +48,18 @@ export const getBestProducts = async () => {
         console.error('Error fetching best products:', error);
         throw error;
     }
-}
+};
+
+export const createProductModel = async ({ name, category_id, description, price, stock, url_image, isactive}) => {
+    const consultaSQL = {
+        text: 'INSERT INTO products (name, category_id, description, price, stock, url_image, isactive) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+        values: [name, category_id, description, price, stock, url_image, isactive]
+    };
+    try {
+        const res = await pool.query(consultaSQL);
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+};

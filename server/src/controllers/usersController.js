@@ -1,4 +1,4 @@
-import { createUserModel, findUserById, findOrdersByUser, addFavorite, removeFavorite } from "../models/usersModel.js";
+import { createUserModel, findUserById, findOrdersByUser, addFavoriteModel, removeFavoriteModel } from "../models/usersModel.js";
 
 export const registerUser = async (req, res) => {
   try{
@@ -58,7 +58,7 @@ export const addFavorite = async (req, res) => {
     const userId = req.user.id
     const { productId } = req.body
 
-    await addFavorite(userId, productId)
+    await addFavoriteModel(userId, productId)
 
     res.json({ message: "Producto agregado a favoritos" })
 
@@ -79,7 +79,7 @@ export const removeFavorite = async (req, res) => {
     const userId = req.user.id
     const { productId } = req.params
 
-    await removeFavorite(userId, productId)
+    await removeFavoriteModel(userId, productId)
 
     res.json({ message: "Favorito eliminado" })
 

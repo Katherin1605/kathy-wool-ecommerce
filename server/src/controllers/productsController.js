@@ -1,4 +1,4 @@
-import { getProducts, getProductById, getBestProducts } from '../models/productsModel.js';
+import { getProducts, getProductById, getBestProducts, createProductModel } from '../models/productsModel.js';
 
 export const fetchProducts = async (req, res) => {
     const {order_by, limit, page, category_id} = req.query;
@@ -31,6 +31,17 @@ export const fetchBestProducts = async (req, res) => {
         res.json(bestProducts);
     } catch (error) {
         console.error('Error fetching best products:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export const createProduct = async (req, res) => {
+    try {
+        const { name, category_id, description, price, stock, url_image, isactive } = req.body;
+        const newProduct = await createProductModel({ name, category_id, description, price, stock, url_image, isactive });
+        res.status(201).json(newProduct);
+    } catch (error) {
+        console.error('Error creating product:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
