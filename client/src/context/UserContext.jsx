@@ -81,6 +81,7 @@ useEffect(() => {
     setToken(null);
     setEmail(null);
     setUser(null);
+    setFavorites([]);
   };
 
   const updateProfile = (updatedData) => {

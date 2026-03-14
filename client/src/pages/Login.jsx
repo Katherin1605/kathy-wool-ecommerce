@@ -113,7 +113,7 @@ const Login = () => {
               </label>
             </div>
             <Link 
-              to="#" 
+              to="/contact" 
               className="link-primary-accent fw-medium text-sm"
             >
               ¿Olvidaste tu contraseña?
