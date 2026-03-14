@@ -123,8 +123,8 @@ const Login = () => {
                 Recordarme
               </label>
             </div>
-            <Link
-              to="#"
+            <Link 
+              to="/contact" 
               className="link-primary-accent fw-medium text-sm"
             >
               ¿Olvidaste tu contraseña?
