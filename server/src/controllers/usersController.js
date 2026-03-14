@@ -1,4 +1,4 @@
-import { createUserModel, findUserById, findOrdersByUser, addFavoriteModel, removeFavoriteModel } from "../models/usersModel.js";
+import { createUserModel, findUserById, findOrdersByUser, addFavoriteModel, removeFavoriteModel, getFavoritesByUser } from "../models/usersModel.js";
 
 export const registerUser = async (req, res) => {
   try{
@@ -35,7 +35,7 @@ export const getUserOrders = async (req, res) => {
 
   try {
 
-    const userId = 1 //req.user.id. TODO: Implementar autenticación para obtener el ID del usuario logueado
+    const userId = req.user.id
 
     const orders = await findOrdersByUser(userId)
 
@@ -91,4 +91,15 @@ export const removeFavorite = async (req, res) => {
 
   }
 
+}
+
+export const getUserFavorites = async (req, res) => {
+  try {
+    const userId = req.user.id
+    const favorites = await getFavoritesByUser(userId)
+    res.json(favorites)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error obteniendo favoritos" })
+  }
 }

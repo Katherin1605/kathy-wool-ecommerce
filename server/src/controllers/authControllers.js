@@ -15,8 +15,8 @@ const loginUser = async (req, res) => {
   if(!isPasswordValid){
     return res.status(401).json({message: 'no autorizado'})
   }
-  const token = jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '1h'})
-  return res.status(200).json({token, user: { name: user.name, email: user.email, role: user.role }})
+  const token = jwt.sign({ user_id: user.user_id, email }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    return res.status(200).json({ token, user: { user_id: user.user_id, name: user.name, email: user.email, role: user.role } })
   }catch(error){
     res.status(500).json({error: error.message})
   }

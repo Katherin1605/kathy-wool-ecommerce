@@ -71,3 +71,14 @@ export const removeFavoriteModel = async (userId, productId) => {
   await pool.query(query, [userId, productId])
 
 }
+
+export const getFavoritesByUser = async (userId) => {
+  const query = `
+    SELECT f.favorite_id, p.product_id, p.name, p.price, p.url_image
+    FROM favorites f
+    JOIN products p ON f.product_id = p.product_id
+    WHERE f.user_id = $1
+  `
+  const { rows } = await pool.query(query, [userId])
+  return rows
+}

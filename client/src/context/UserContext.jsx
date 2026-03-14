@@ -1,4 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+
+
 
 const UserContext = createContext();
 
@@ -18,6 +21,25 @@ export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [email, setEmail] = useState(() => localStorage.getItem('email'));
+  const [favorites, setFavorites] = useState([]);
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+const fetchFavorites = async () => {
+  if (!token) return;
+  try {
+    const res = await axios.get(`${API_URL}/users/me/favorites`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    setFavorites(res.data.map(f => f.product_id));
+  } catch (error) {
+    console.error('Error cargando favoritos', error);
+  }
+};
+
+useEffect(() => {
+  fetchFavorites();
+}, [token]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -74,7 +96,10 @@ export const UserProvider = ({ children }) => {
     auth,
     register,
     email,
-    updateProfile
+    updateProfile,
+    favorites,
+    setFavorites,
+    fetchFavorites
   };
 
   return <UserContext.Provider value={stateGlobal}>{children}</UserContext.Provider>;

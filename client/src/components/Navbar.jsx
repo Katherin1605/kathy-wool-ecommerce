@@ -5,16 +5,16 @@ import { useAuth } from "../hooks/useAuth"
 import { useCartTotals } from "../hooks/useCartTotals"
 
 const optionsByRole = {
-  Administrador: [
+  admin: [
     { label: 'Admin', to: '/admin', icon: 'bi bi-gear', position: 'center' },
     { label: 'Perfil', to: '/admin/profile', icon: 'bi bi-person', field: 'name' }
   ],
-  Cliente: [
+  client: [
     { label: 'Perfil', to: '/user/profile', icon: 'bi bi-person', field: 'name' },
   ],
 }
 
-const mockAdmin = { name: 'Administrador', role: 'Administrador' };
+const mockAdmin = { name: 'Administrador', role: 'admin' };
 
 function Navbar() {
   const { user, isAdmin, isLoggedIn } = useAuth()
