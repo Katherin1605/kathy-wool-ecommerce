@@ -105,3 +105,21 @@ export const getFavoritesByUser = async (userId) => {
   const { rows } = await pool.query(query, [userId])
   return rows
 }
+
+export const updateProfileImage = async (userId, imageUrl) => {
+  const query = `
+    UPDATE users SET profile_image = $1 WHERE user_id = $2 RETURNING *
+  `
+  const { rows } = await pool.query(query, [imageUrl, userId])
+  return rows[0]
+}
+
+export const updateUserModel = async (userId, name, email, bio) => {
+  const query = `
+    UPDATE users SET name = $1, email = $2, bio = $3
+    WHERE user_id = $4
+    RETURNING user_id, name, email, role, profile_image, bio
+  `
+  const { rows } = await pool.query(query, [name, email, profile_image, bio, userId])
+  return rows[0]
+}

@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
     return res.status(401).json({message: 'no autorizado'})
   }
   const token = jwt.sign({ user_id: user.user_id, email }, process.env.JWT_SECRET, { expiresIn: '1h' })
-    return res.status(200).json({ token, user: { user_id: user.user_id, name: user.name, email: user.email, role: user.role } })
+    return res.status(200).json({ token, user: { user_id: user.user_id, name: user.name, email: user.email, role: user.role, profile_image: user.profile_image, bio: user.bio } })
   }catch(error){
     res.status(500).json({error: error.message})
   }

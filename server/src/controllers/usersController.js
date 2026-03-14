@@ -1,4 +1,4 @@
-import { createUserModel, findUserById, findOrdersByUser, addFavoriteModel, removeFavoriteModel, getFavoritesByUser } from "../models/usersModel.js";
+import { createUserModel, findUserById, findOrdersByUser, addFavoriteModel, removeFavoriteModel, getFavoritesByUser, updateProfileImage, updateUserModel } from "../models/usersModel.js";
 
 export const registerUser = async (req, res) => {
   try{
@@ -101,5 +101,29 @@ export const getUserFavorites = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: "Error obteniendo favoritos" })
+  }
+}
+
+export const updateUserAvatar = async (req, res) => {
+  try {
+    const userId = req.user.id
+    const { profile_image } = req.body
+    const user = await updateProfileImage(userId, profile_image)
+    res.json({ profile_image: user.profile_image })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error actualizando avatar" })
+  }
+}
+
+export const updateUser = async (req, res) => {
+  try {
+    const userId = req.user.id
+    const { name, email, profile_image, bio } = req.body
+    const user = await updateUserModel(userId, name, email, profile_image, bio)
+    res.json(user)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error actualizando perfil" })
   }
 }

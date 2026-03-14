@@ -17,6 +17,32 @@ const UserProfile = () => {
         email: user?.email || '',
         bio: user?.bio || 'Amante de los tejidos artesanales',
     });
+    const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+
+    const avatars = [
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Nolan',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Lily',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Whiskers',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Garfield',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Mittens',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Luna',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Felix',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Cleo',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Shadow',
+        'https://api.dicebear.com/9.x/adventurer/svg?seed=Pepper',
+    ];
+
+    const selectAvatar = async (url) => {
+        try {
+            await axios.put(`${API_URL}/users/me/avatar`, { profile_image: url }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            updateProfile({ profile_image: url });
+            setShowAvatarPicker(false);
+        } catch (error) {
+            console.error('Error actualizando avatar', error);
+        }
+    };
 
     useEffect(() => {
         if (!token) return;
@@ -35,9 +61,21 @@ const UserProfile = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSave = () => {
-        updateProfile(form);
-        setIsEditing(false);
+    const handleSave = async () => {
+        try {
+            const res = await axios.put(`${API_URL}/users/me`, {
+                name: form.name,
+                email: form.email,
+                profile_image: form.profile_image,
+                bio: form.bio
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            updateProfile(res.data);
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error guardando perfil', error);
+        }
     };
 
     const handleCancel = () => {
@@ -71,7 +109,7 @@ const UserProfile = () => {
         <div className="profile-container mt-4">
             {isEditing ? (
                 <div className="card border-0 shadow-sm p-4 mb-4">
-                    <div className="d-flex gap-4">
+                    <div className="d-flex align-items-start gap-4">
                         <div className="profile-avatar-wrapper flex-shrink-0">
                             <div className="profile-avatar">
                                 <i className="bi bi-person-fill" aria-hidden></i>
@@ -109,9 +147,12 @@ const UserProfile = () => {
                     <div className="d-flex align-items-center gap-4">
                         <div className="profile-avatar-wrapper">
                             <div className="profile-avatar">
-                                <i className="bi bi-person-fill" aria-hidden></i>
+                                {user.profile_image
+                                    ? <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                                    : <i className="bi bi-person-fill" aria-hidden></i>
+                                }
                             </div>
-                            <button className="profile-avatar-edit" aria-label="Cambiar foto">
+                            <button className="profile-avatar-edit" aria-label="Cambiar avatar" onClick={() => setShowAvatarPicker(true)}>
                                 <i className="bi bi-camera-fill"></i>
                             </button>
                         </div>
@@ -125,6 +166,34 @@ const UserProfile = () => {
                                 Editar Perfil
                             </button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {showAvatarPicker && (
+                <div className="card border-0 shadow-sm p-4 mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="fw-bold text-heading mb-0">Elige tu avatar</h5>
+                        <button className="btn btn-sm btn-outline-secondary" onClick={() => setShowAvatarPicker(false)}>
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                    <div className="d-flex flex-wrap gap-3 justify-content-center">
+                        {avatars.map((url, i) => (
+                            <img
+                                key={i}
+                                src={url}
+                                alt={`Avatar ${i + 1}`}
+                                onClick={() => selectAvatar(url)}
+                                style={{
+                                    width: '80px', height: '80px', borderRadius: '50%', cursor: 'pointer',
+                                    border: user.profile_image === url ? '3px solid var(--primary-accent, #e91e63)' : '3px solid transparent',
+                                    transition: 'transform 0.2s',
+                                }}
+                                onMouseEnter={e => e.target.style.transform = 'scale(1.1)'}
+                                onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                            />
+                        ))}
                     </div>
                 </div>
             )}
@@ -163,7 +232,7 @@ const UserProfile = () => {
                 )}
             </div>
 
-                        {/* Sección Compras */}
+            {/* Sección Compras */}
             <div className="card border-0 shadow-sm p-4 mb-4">
                 <h5 className="fw-bold text-heading mb-4">
                     <i className="bi bi-bag text-primary-accent me-2" aria-hidden></i>
