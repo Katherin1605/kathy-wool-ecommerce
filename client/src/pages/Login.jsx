@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ const Login = () => {
     try {
       const { data } = await axios.post(`${API_URL}/auth/login`, { email, password });
       const { token, user } = data;
-      auth({ ...user, token });
+      auth({ ...user, token }, rememberMe);
       if (user.role === 'admin') {
         navigate('/admin');
       } else {
@@ -111,6 +112,8 @@ const Login = () => {
                 className="form-check-input shadow-none"
                 type="checkbox"
                 id="rememberMe"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
                 aria-label="Recordarme"
               />
               <label

@@ -15,12 +15,12 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user")
+    const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user")
     return storedUser ? JSON.parse(storedUser) : null
   })
   const [users, setUsers] = useState([]);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
-  const [email, setEmail] = useState(() => localStorage.getItem('email'));
+  const [token, setToken] = useState(() => localStorage.getItem('token') || sessionStorage.getItem('token'));
+  const [email, setEmail] = useState(() => localStorage.getItem('email') || sessionStorage.getItem('email'));
   const [favorites, setFavorites] = useState([]);
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
@@ -41,13 +41,6 @@ useEffect(() => {
   fetchFavorites();
 }, [token]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
 
   const register = (name, userEmail, password, role = 'cliente') => {
     const newUser = { name, email: userEmail, role };
@@ -61,15 +54,24 @@ useEffect(() => {
     return newUser;
   };
 
-  const auth = (userData) => {
+  const auth = (userData, remember = false) => {
     const realToken = userData.token;
     setUser(userData);
     setToken(realToken);
     setEmail(userData.email);
 
-    localStorage.setItem('token', realToken);
-    localStorage.setItem('email', userData.email);
-    localStorage.setItem("user", JSON.stringify(userData));
+    // Limpiar ambos storages antes de guardar en el elegido
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('user');
+
+    const storage = remember ? localStorage : sessionStorage;
+    storage.setItem('token', realToken);
+    storage.setItem('email', userData.email);
+    storage.setItem("user", JSON.stringify(userData));
 
     return userData;
   };
@@ -78,6 +80,9 @@ useEffect(() => {
     localStorage.removeItem('token');
     localStorage.removeItem("user");
     localStorage.removeItem('email');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem('email');
     setToken(null);
     setEmail(null);
     setUser(null);
@@ -86,7 +91,8 @@ useEffect(() => {
   const updateProfile = (updatedData) => {
     const updatedUser = { ...user, ...updatedData };
     setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    const storage = localStorage.getItem('token') ? localStorage : sessionStorage;
+    storage.setItem("user", JSON.stringify(updatedUser));
   };
 
   const stateGlobal = {
