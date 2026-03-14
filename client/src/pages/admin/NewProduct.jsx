@@ -16,7 +16,7 @@ const NewProduct = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Configuración de colores del diseño
+  // Configuraciï¿½n de colores del diseï¿½o
   const pinkColor = "#ff219d";
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const NewProduct = () => {
 
     setLoading(true);
 
-    // Acá está la configuración de Cloudinary -> NO TOCAR!!!!
+    // Acï¿½ estï¿½ la configuraciï¿½n de Cloudinary -> NO TOCAR!!!!
     const data = new FormData();
     data.append("file", imageFile);
     data.append("upload_preset", "kathy-wool-upload-image");
@@ -82,7 +82,7 @@ const NewProduct = () => {
         } catch (error) {
           console.error("Error al crear el producto:", error);
         }
-        alert("Producto creado con éxito");
+        alert("Producto creado con Ã©xito");
       }
     } catch (error) {
       console.error("Error al subir:", error);
@@ -103,7 +103,7 @@ const NewProduct = () => {
           >
             +
           </div>
-          <h2 className="fw-bold" style={{ color: '#1a1d2e' }}>Agregar Nuevo Diseño</h2>
+          <h2 className="fw-bold" style={{ color: '#1a1d2e' }}>Agregar Nuevo Diseï¿½o</h2>
           <p className="text-muted">Agrega un nuevo producto a la tienda</p>
         </div>
 
@@ -111,7 +111,7 @@ const NewProduct = () => {
 
           {/* Zona de Carga de Imagen */}
           <div className="mb-4">
-            <label className="form-label fw-semibold text-secondary">Imágenes del Producto</label>
+            <label className="form-label fw-semibold text-secondary">Imï¿½genes del Producto</label>
             <div
               className="position-relative border rounded-3 p-5 text-center bg-white"
               style={{ borderStyle: 'dashed', borderWidth: '2px', borderColor: '#dee2e6' }}
@@ -124,8 +124,8 @@ const NewProduct = () => {
               />
               <div className="text-muted">
                 <span style={{ fontSize: '40px' }}>??</span>
-                <p className="mb-1 fw-medium text-dark">Haz clic para subir imágenes o arrastra aquí</p>
-                <small>PNG, JPG hasta 10MB (máximo 5 imágenes)</small>
+                <p className="mb-1 fw-medium text-dark">Haz clic para subir imï¿½genes o arrastra aquï¿½</p>
+                <small>PNG, JPG hasta 10MB (mï¿½ximo 5 imï¿½genes)</small>
               </div>
               {previewUrl && (
                 <img src={previewUrl} alt="Preview" className="mt-3 rounded shadow-sm" style={{ maxHeight: '150px' }} />
@@ -133,9 +133,9 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* Título */}
+          {/* Tï¿½tulo */}
           <div className="mb-3">
-            <label className="form-label fw-semibold text-secondary">Título del Producto</label>
+            <label className="form-label fw-semibold text-secondary">Tï¿½tulo del Producto</label>
             <div className="input-group">
               <span className="input-group-text bg-white border-end-0 text-muted">???</span>
               <input
@@ -149,7 +149,7 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* Categoría */}
+          {/* Categorï¿½a */}
           <div className="mb-3">
             <label htmlFor="categoryId" className='form-label'>Categoria:</label>
             <select id="categoryId" className='form-select' value={categoryId} onChange={(e) => {
@@ -182,14 +182,14 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* Descripción */}
+          {/* Descripciï¿½n */}
           <div className="mb-4">
-            <label className="form-label fw-semibold text-secondary">Descripción</label>
+            <label className="form-label fw-semibold text-secondary">Descripciï¿½n</label>
             <textarea
               name="description"
               className="form-control"
               rows="4"
-              placeholder="Describe tu producto: materiales, tamaño, cuidados, etc."
+              placeholder="Describe tu producto: materiales, tamaï¿½o, cuidados, etc."
               onChange={handleInputChange}
             ></textarea>
           </div>
@@ -205,7 +205,7 @@ const NewProduct = () => {
               disabled={loading}
               style={{ backgroundColor: pinkColor, border: 'none' }}
             >
-              {loading ? 'Subiendo...' : 'Agregar Diseño'}
+              {loading ? 'Subiendo...' : 'Agregar Diseï¿½o'}
             </button>
           </div>
 
