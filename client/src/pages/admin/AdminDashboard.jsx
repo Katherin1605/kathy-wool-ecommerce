@@ -7,7 +7,8 @@ const initialForm = {
     stock: 0,
     category: "",
     description: "",
-    status: "Activo",
+    image: null,
+    status: "Activo"
 }
 
 function AdminDashboard() {
@@ -35,8 +36,19 @@ function AdminDashboard() {
     const [form, setForm] = useState(initialForm)
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-        setForm({ ...form, [name]: value })
+        const { name, value, files } = e.target
+
+        if (files) {
+            setForm({
+                ...form,
+                [name]: files[0]
+            })
+        } else {
+            setForm({
+                ...form,
+                [name]: value
+            })
+        }
     }
 
     const handleSave = (e) => {
@@ -48,6 +60,7 @@ function AdminDashboard() {
             id: products.length ? Math.max(...products.map(p => p.id)) + 1 : 1,
             price: Number(form.price),
             stock: Number(form.stock),
+            image: form.image ? URL.createObjectURL(form.image) : null
         }
 
         setProducts([...products, newProduct])
@@ -60,20 +73,22 @@ function AdminDashboard() {
         setShowModal(false)
     }
 
-    const metrics = {
-        totalProducts: products.length,
-        totalStock: products.reduce((sum, p) => sum + p.stock, 0),
-        inventoryValue: products.reduce((sum, p) => sum + p.price * p.stock, 0),
-        lowStock: products.filter(p => p.stock < 5).length
-    }
+    // const metrics = {
+    //     totalProducts: products.length,
+    //     totalStock: products.reduce((sum, p) => sum + p.stock, 0),
+    //     inventoryValue: products.reduce((sum, p) => sum + p.price * p.stock, 0),
+    //     lowStock: products.filter(p => p.stock < 5).length
+    // }
 
     return (
         <div className="m-3">
 
             <h1><i className="bi bi-gear"></i> Panel de Administración</h1>
-            <p>Gestiona tu inventario y productos</p>
 
-            <div className="admin-metrics">
+            {/* Por ahora mantendremos esta sección de metricas comentada */}
+            {/* <p>Gestiona tu inventario y productos</p> */}
+
+            {/* <div className="admin-metrics">
 
                 <div className="metric-card">
                 <div>
@@ -116,11 +131,11 @@ function AdminDashboard() {
                 </div>
                 </div>
 
-            </div>
+            </div> */}
 
             <div className="search">
                 <div className="input-group flex-nowrap">
-                    <input type="text" className="form-control" placeholder=" 🔍  Buscar productos..."/>
+                    <input type="text" className="form-control" placeholder=" 🔍  Buscar productos..." />
                 </div>
                 <div className="actions">
                     <button className="btn-primary" onClick={() => setShowModal(true)}>
@@ -200,6 +215,15 @@ function AdminDashboard() {
                                 onChange={handleChange}
                             />
 
+                            <label className="modal-label">Imagen del Producto</label>
+                            <input
+                                type="file"
+                                name="image"
+                                className="modal-input"
+                                accept="image/*"
+                                onChange={handleChange}
+                            />
+
                             <label className="modal-label">Estado</label>
                             <div className="modal-radio-group">
                                 <label className="modal-radio">
@@ -223,6 +247,7 @@ function AdminDashboard() {
                                     Inactivo
                                 </label>
                             </div>
+
 
                             <div className="modal-actions">
                                 <button type="submit" className="btn-primary modal-btn">

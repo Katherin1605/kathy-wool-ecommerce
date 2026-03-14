@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const register = (name, userEmail, password, role = 'Cliente') => {
+  const register = (name, userEmail, password, role = 'cliente') => {
     const newUser = { name, email: userEmail, role };
     
     setUser(newUser);

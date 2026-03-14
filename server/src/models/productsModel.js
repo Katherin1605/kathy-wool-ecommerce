@@ -37,3 +37,34 @@ export const getProductById = async (id) => {
         throw error;
     }
 };
+
+export const updateProduct = async (id, { name, category_id, description, price, stock, url_image, isActive }) => {
+    const consultaSQL = {
+        text: `UPDATE products 
+               SET name = $1, category_id = $2, description = $3, price = $4, stock = $5, url_image = $6, "isactive" = $7
+               WHERE product_id = $8
+               RETURNING *`,
+        values: [name, category_id, description, price, stock, url_image, isActive, id]
+    };
+    try {
+        const res = await pool.query(consultaSQL);
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error updating product:', error);
+        throw error;
+    }
+};
+
+export const deleteProduct = async (id) => {
+    const consultaSQL = {
+        text: 'DELETE FROM products WHERE product_id = $1 RETURNING *',
+        values: [id]
+    };
+    try {
+        const res = await pool.query(consultaSQL);
+        return res.rows[0];
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        throw error;
+    }
+};
