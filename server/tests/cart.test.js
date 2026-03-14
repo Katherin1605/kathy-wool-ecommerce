@@ -3,51 +3,56 @@ import app from "../server.js";
 
 describe("Cart API", () => {
 
-    test("GET /api/cart/:userId should return cart items", async () => {
+    test("Debe obtener el carrito de un usuario", async () => {
 
-        const response = await request(app).get("/api/cart/1");
+        const res = await request(app)
+        .get("/api/cart/1");
 
-        expect(response.statusCode).toBe(200);
+        expect(res.statusCode).toBe(200);
+        expect(Array.isArray(res.body)).toBe(true);
 
     });
 
-    test("POST /api/cart/add should add product to cart", async () => {
+    test("Debe agregar el producto al carrito", async () => {
 
-        const response = await request(app)
+        const res = await request(app)
         .post("/api/cart/add")
         .send({
             userId: 1,
-            productId: 1
+            productId: 2
         });
 
-        expect(response.statusCode).toBe(200);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Producto agregado al carrito");
 
     });
 
-    test("PUT /api/cart/update should update quantity", async () => {
+    test("Debe actualizar cantidad dentro del carrito", async () => {
 
-        const response = await request(app)
+        const res = await request(app)
         .put("/api/cart/update")
         .send({
             userId: 1,
-            productId: 1,
-            amount: 2
+            productId: 2,
+            amount: 3
         });
 
-        expect(response.statusCode).toBe(200);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Cantidad actualizada exitosamente");
 
     });
 
-    test("DELETE /api/cart/remove should remove item", async () => {
+    test("Debe eliminar el producto del carrito", async () => {
 
-        const response = await request(app)
+        const res = await request(app)
         .delete("/api/cart/remove")
         .send({
             userId: 1,
-            productId: 1
+            productId: 2
         });
 
-        expect(response.statusCode).toBe(200);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Producto eliminado correctamente");
 
     });
 
