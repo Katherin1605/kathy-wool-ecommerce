@@ -38,14 +38,37 @@ export const findUserById = async (userId) => {
 export const findOrdersByUser = async (userId) => {
 
   const query = `
-    SELECT *
-    FROM orders
-    WHERE user_id = $1
+    SELECT o.order_id, o.date, o.total,
+           od.amount, od.currentprice,
+           p.name, p.url_image
+    FROM orders o
+    JOIN orderdetails od ON o.order_id = od.order_id
+    JOIN products p ON od.product_id = p.product_id
+    WHERE o.user_id = $1
+    ORDER BY o.date DESC
   `
 
   const { rows } = await pool.query(query, [userId])
 
-  return rows
+  const grouped = {}
+  for (const row of rows) {
+    if (!grouped[row.order_id]) {
+      grouped[row.order_id] = {
+        order_id: row.order_id,
+        date: row.date,
+        total: row.total,
+        items: []
+      }
+    }
+    grouped[row.order_id].items.push({
+      name: row.name,
+      url_image: row.url_image,
+      amount: row.amount,
+      price: row.currentprice
+    })
+  }
+
+  return Object.values(grouped)
 
 }
 

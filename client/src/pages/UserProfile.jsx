@@ -163,7 +163,7 @@ const UserProfile = () => {
                 )}
             </div>
 
-            {/* Sección Compras */}
+                        {/* Sección Compras */}
             <div className="card border-0 shadow-sm p-4 mb-4">
                 <h5 className="fw-bold text-heading mb-4">
                     <i className="bi bi-bag text-primary-accent me-2" aria-hidden></i>
@@ -173,7 +173,7 @@ const UserProfile = () => {
                     <div className="d-flex flex-column gap-3">
                         {orders.map(order => (
                             <div key={order.order_id} className="card border p-3">
-                                <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex justify-content-between align-items-center mb-3">
                                     <div>
                                         <span className="fw-semibold">Pedido #{order.order_id}</span>
                                         <span className="text-muted text-sm ms-3">
@@ -182,6 +182,16 @@ const UserProfile = () => {
                                     </div>
                                     <span className="fw-bold">${Intl.NumberFormat('es-CL').format(order.total)}</span>
                                 </div>
+                                {order.items.map((item, i) => (
+                                    <div key={i} className="d-flex align-items-center gap-3 border-top py-2">
+                                        <img src={item.url_image} alt={item.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '8px' }} />
+                                        <div className="flex-grow-1">
+                                            <p className="mb-0 fw-semibold text-sm">{item.name}</p>
+                                            <p className="mb-0 text-muted text-sm">x{item.amount}</p>
+                                        </div>
+                                        <span className="text-sm">${Intl.NumberFormat('es-CL').format(item.price * item.amount)}</span>
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>

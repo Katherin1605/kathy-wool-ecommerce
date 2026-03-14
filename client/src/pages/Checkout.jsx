@@ -8,14 +8,14 @@ function Checkout() {
     const { token, user } = useUser()
     const { cart, clearCart } = useCart()
     const { subtotal } = useCartTotals()
-    
+
     // const user = getProfile()
     const isLoggedIn = !!token
     const isAdmin = user?.role === "Administrador"
-    
+
     const [orderNumber, setOrderNumber] = useState(null)
     const [orderItems, setOrderItems] = useState([])
-    
+
     const navigate = useNavigate()
 
     // para generar un número de pedido
@@ -23,20 +23,23 @@ function Checkout() {
         return "KW-" + Math.floor(Math.random() * 1000000)
     }
 
-        // para mostrar el total del carrito
+    // para mostrar el total del carrito
     const handleCheckout = async () => {
 
         const newOrder = generateOrderNumber()
 
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
         try {
 
-            await fetch("/api/checkout", {
+            await fetch(`${API_URL}/api/checkout`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    userId: user.user_id
+                    userId: user.user_id,
+                    items: cart
                 })
             })
 
@@ -111,11 +114,11 @@ function Checkout() {
                             className="d-flex justify-content-between border-bottom py-2"
                         >
                             <span>
-                            {item.name} x {item.quantity}
+                                {item.name} x {item.quantity}
                             </span>
 
                             <span>
-                            ${(item.price * item.quantity).toLocaleString("es-CL")}
+                                ${(item.price * item.quantity).toLocaleString("es-CL")}
                             </span>
                         </div>
                     ))}
@@ -137,7 +140,7 @@ function Checkout() {
                         onClick={() => navigate("/products")}
                     >
                         <i className="bi bi-shop me-2"></i>
-                    Seguir comprando
+                        Seguir comprando
                     </button>
                 </div>
             )}
