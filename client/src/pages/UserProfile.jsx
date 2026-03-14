@@ -20,16 +20,19 @@ const UserProfile = () => {
     const [showAvatarPicker, setShowAvatarPicker] = useState(false);
 
     const avatars = [
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Nolan',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Lily',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Whiskers',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Garfield',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Mittens',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Luna',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Felix',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Cleo',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Shadow',
-        'https://api.dicebear.com/9.x/adventurer/svg?seed=Pepper',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Felix',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Aneka',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Sawyer',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Liam',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Valentina',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Emery',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Ryan',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Maria',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Aidan',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Jameson',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Andrea',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Destiny',
+        'https://api.dicebear.com/9.x/fun-emoji/svg?seed=Sophia',
     ];
 
     const selectAvatar = async (url) => {
