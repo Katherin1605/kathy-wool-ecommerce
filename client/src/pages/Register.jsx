@@ -32,7 +32,7 @@ const Registro = () => {
     }
 
     try {
-      const { data } = await axios.post(`${API_URL}/users`, { name, email, password, role: 'Cliente' });
+      const { data } = await axios.post(`${API_URL}/users`, { name, email, password, role: 'cliente' });
       register(data.user.name, data.user.email, data.user.password, data.user.role);
       setSuccess(`¡Bienvenido/a ${data.user.name}! Cuenta creada exitosamente.`);
       setTimeout(() => navigate('/login'), 1500);
@@ -46,7 +46,7 @@ const Registro = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-page">
+    <div className="d-flex justify-content-center align-items-center vh-50 bg-page">
       <div className="card shadow-sm p-4 border-0 form-card form-card--narrow">
         <div className="text-center mb-4 mt-2">
           <div className="icon-circle icon-circle--sm d-inline-flex mb-3">
