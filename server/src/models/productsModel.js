@@ -8,12 +8,12 @@ export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page 
         let formattedQuery;
         if (category_id > 0) {
             formattedQuery = format(
-                'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id HAVING p.category_id = %s ORDER BY %s %s LIMIT %s OFFSET %s',
+                'SELECT p.product_id, p.name, p.category_id, p.description, p.price, p.stock, p.url_image, p.isactive, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id HAVING p.category_id = %s ORDER BY %s %s LIMIT %s OFFSET %s',
                 category_id, column, direction, limit, offset
             );
         } else {
             formattedQuery = format(
-                'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id ORDER BY %s %s LIMIT %s OFFSET %s',
+                'SELECT p.product_id, p.name, p.category_id, p.description, p.price, p.stock, p.url_image, p.isactive, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id ORDER BY %s %s LIMIT %s OFFSET %s',
                 column, direction, limit, offset);
             }
         const res = await pool.query(formattedQuery);
@@ -62,4 +62,21 @@ export const createProductModel = async ({ name, category_id, description, price
         console.error('Error creating product:', error);
         throw error;
     }
+};
+
+export const updateProductModel = async (id, { name, category_id, description, price, stock, url_image, isactive }) => {
+    const consultaSQL = {
+        text: 'UPDATE products SET name=$1, category_id=$2, description=$3, price=$4, stock=$5, url_image=$6, isactive=$7 WHERE product_id=$8 RETURNING *',
+        values: [name, category_id, description, price, stock, url_image, isactive, id]
+    };
+    const res = await pool.query(consultaSQL);
+    return res.rows[0];
+};
+
+export const deleteProductModel = async (id) => {
+    const consultaSQL = {
+        text: 'DELETE FROM products WHERE product_id = $1',
+        values: [id]
+    };
+    await pool.query(consultaSQL);
 };

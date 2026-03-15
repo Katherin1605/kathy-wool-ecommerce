@@ -1,4 +1,4 @@
-import { getProducts, getProductById, getBestProducts, createProductModel } from '../models/productsModel.js';
+import { getProducts, getProductById, getBestProducts, createProductModel, updateProductModel, deleteProductModel } from '../models/productsModel.js';
 
 export const fetchProducts = async (req, res) => {
     const {order_by, limit, page, category_id} = req.query;
@@ -42,6 +42,31 @@ export const createProduct = async (req, res) => {
         res.status(201).json(newProduct);
     } catch (error) {
         console.error('Error creating product:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export const updateProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const updated = await updateProductModel(id, req.body);
+        if (!updated) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
+        }
+        res.json(updated);
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export const deleteProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await deleteProductModel(id);
+        res.json({ message: 'Producto eliminado' });
+    } catch (error) {
+        console.error('Error deleting product:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
