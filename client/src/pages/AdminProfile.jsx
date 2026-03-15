@@ -17,8 +17,7 @@ const statusClass = {
 const mockAdmin = { name: 'Administrador', email: 'admin@kathywool.com', role: 'Administrador' };
 
 const AdminProfile = () => {
-  const { getProfile, updateProfile } = useUser();
-  const user = getProfile();
+  const { user, updateProfile } = useUser();
 
   const activeUser = user || mockAdmin;
 

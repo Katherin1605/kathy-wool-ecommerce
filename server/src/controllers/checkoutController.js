@@ -6,6 +6,10 @@ export const checkout = async (req, res) => {
 
     try {
 
+        if (!items || items.length === 0) {
+            return res.status(400).json({ error: "No hay productos en el carrito" });
+        }
+        
         const cartItems = items.map(item => ({
             product_id: item.id,
             price: item.price,
