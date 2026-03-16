@@ -120,6 +120,6 @@ export const updateUserModel = async (userId, name, email, bio) => {
     WHERE user_id = $4
     RETURNING user_id, name, email, role, profile_image, bio
   `
-  const { rows } = await pool.query(query, [name, email, profile_image, bio, userId])
+  const { rows } = await pool.query(query, [name, email, bio, userId])
   return rows[0]
 }

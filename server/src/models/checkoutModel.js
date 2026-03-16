@@ -35,4 +35,39 @@ export const createOrder = async (userId, cartItems, total) => {
     }
 
     return order.rows[0]
-}
+};
+
+export const getAllOrders = async () => {
+    const query = `
+        SELECT o.order_id, o.date, o.total, u.name as customer, u.email,
+               od.amount, od.currentprice, p.name as product_name, p.url_image
+        FROM orders o
+        JOIN users u ON o.user_id = u.user_id
+        JOIN orderdetails od ON o.order_id = od.order_id
+        JOIN products p ON od.product_id = p.product_id
+        ORDER BY o.date DESC
+    `
+    const { rows } = await pool.query(query)
+
+    const grouped = {}
+    for (const row of rows) {
+        if (!grouped[row.order_id]) {
+            grouped[row.order_id] = {
+                order_id: row.order_id,
+                date: row.date,
+                total: row.total,
+                customer: row.customer,
+                email: row.email,
+                items: []
+            }
+        }
+        grouped[row.order_id].items.push({
+            name: row.product_name,
+            url_image: row.url_image,
+            amount: row.amount,
+            price: row.currentprice
+        })
+    }
+
+    return Object.values(grouped)
+};

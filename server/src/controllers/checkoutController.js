@@ -1,4 +1,4 @@
-import { createOrder } from "../models/checkoutModel.js";
+import { createOrder, getAllOrders } from "../models/checkoutModel.js";
 
 export const checkout = async (req, res) => {
 
@@ -33,3 +33,13 @@ export const checkout = async (req, res) => {
     }
 
 };
+
+export const fetchAllOrders = async (req, res) => {
+    try {
+        const orders = await getAllOrders()
+        res.json(orders)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Error obteniendo pedidos" })
+    }
+}
