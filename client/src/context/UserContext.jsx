@@ -1,4 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+
+
 
 const UserContext = createContext();
 
@@ -12,46 +15,63 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user")
+    const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user")
     return storedUser ? JSON.parse(storedUser) : null
   })
   const [users, setUsers] = useState([]);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
-  const [email, setEmail] = useState(() => localStorage.getItem('email'));
+  const [token, setToken] = useState(() => localStorage.getItem('token') || sessionStorage.getItem('token'));
+  const [email, setEmail] = useState(() => localStorage.getItem('email') || sessionStorage.getItem('email'));
+  const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+const fetchFavorites = async () => {
+  if (!token) return;
+  try {
+    const res = await axios.get(`${API_URL}/users/me/favorites`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    setFavorites(res.data.map(f => f.product_id));
+  } catch (error) {
+    console.error('Error cargando favoritos', error);
+  }
+};
 
-  const register = (name, userEmail, password, role = 'Cliente') => {
-    const newUser = { id: Date.now(), name, email: userEmail, password, role };
-    const fakeToken = `token_${Date.now()}`;
+useEffect(() => {
+  fetchFavorites();
+}, [token]);
+
+
+  const register = (name, userEmail, password, role = 'cliente') => {
+    const newUser = { name, email: userEmail, role };
     
-    setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
-    setToken(fakeToken);
     setEmail(userEmail);
     
-    localStorage.setItem('token', fakeToken);
     localStorage.setItem('email', userEmail);
     localStorage.setItem("user", JSON.stringify(newUser));
     
     return newUser;
   };
 
-  const auth = (userData) => {
-    const fakeToken = `token_${Date.now()}`;
+  const auth = (userData, remember = false) => {
+    const realToken = userData.token;
     setUser(userData);
-    setToken(fakeToken);
+    setToken(realToken);
     setEmail(userData.email);
 
-    localStorage.setItem('token', fakeToken);
-    localStorage.setItem('email', userData.email);
-    localStorage.setItem("user", JSON.stringify(userData));
+    // Limpiar ambos storages antes de guardar en el elegido
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('user');
+
+    const storage = remember ? localStorage : sessionStorage;
+    storage.setItem('token', realToken);
+    storage.setItem('email', userData.email);
+    storage.setItem("user", JSON.stringify(userData));
 
     return userData;
   };
@@ -60,15 +80,20 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem("user");
     localStorage.removeItem('email');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem('email');
     setToken(null);
     setEmail(null);
     setUser(null);
+    setFavorites([]);
   };
 
   const updateProfile = (updatedData) => {
     const updatedUser = { ...user, ...updatedData };
     setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    const storage = localStorage.getItem('token') ? localStorage : sessionStorage;
+    storage.setItem("user", JSON.stringify(updatedUser));
   };
 
   const stateGlobal = {
@@ -78,7 +103,10 @@ export const UserProvider = ({ children }) => {
     auth,
     register,
     email,
-    updateProfile
+    updateProfile,
+    favorites,
+    setFavorites,
+    fetchFavorites
   };
 
   return <UserContext.Provider value={stateGlobal}>{children}</UserContext.Provider>;

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
 import { UserProvider } from './context/UserContext'
+import { CartProvider } from './context/CartContext'
 
 import MainLayout from './layouts/MainLayout'
 import AdminLayout from './layouts/AdminLayout'
@@ -8,15 +8,10 @@ import AdminDashboard from "./pages/admin/AdminDashboard"
 import AdminProfile from "./pages/AdminProfile"
 import AdminProducts from "./pages/admin/AdminProducts"
 import AdminOrders from "./pages/admin/AdminOrders"
-import NewProduct from "./pages/admin/NewProduct"
 import UserLayout from './layouts/UserLayout'
 import UserProfile from './pages/UserProfile'
 import MyOrders from './components/MyOrders'
 import MyFavorites from './components/MyFavorites'
-import ProductDetails from './pages/ProductDetails'
-import Form from "./pages/Form"
-
-import { CartProvider } from './context/CartContext'
 
 import Register from './pages/Register'
 import Login from './pages/Login'
@@ -24,6 +19,9 @@ import Home from './pages/Home'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout"
+import ProductDetails from './pages/ProductDetails'
+import Form from "./pages/Form"
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -43,6 +41,7 @@ function App() {
             <Route path="/contact" element={<Form />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
 
           {/* Rutas protegidas para admin */}
@@ -56,7 +55,6 @@ function App() {
 
             {/* <Route path="/admin/users" element={<AdminUsers />} /> */}
 
-            <Route path="/admin/new-product" element={<NewProduct />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
           </Route>
 

@@ -4,5 +4,5 @@
 
 Para acceder al panel de administración, utiliza las siguientes credenciales:
 
-- **Correo electrónico:** admin@test.com
+- **Correo electrónico:** admintest@test.com
 - **Contraseña:** 123456

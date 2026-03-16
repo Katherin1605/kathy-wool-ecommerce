@@ -1,59 +1,218 @@
-function NewProduct(){
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  return(
+const NewProduct = () => {
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState(0);
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    price: '',
+    description: '',
+  });
 
-    <div className="admin-form-container">
+  const [imageFile, setImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-      <h1>Agregar Nuevo Producto</h1>
+  // Configuraci�n de colores del dise�o
+  const pinkColor = "#ff219d";
 
-      <form className="admin-form">
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/categories");
+        setCategories(response.data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
-        <input
-          type="text"
-          placeholder="Título del producto"
-        />
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-        <select>
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
 
-          <option>Selecciona categoría</option>
-          <option>Amigurumi</option>
-          <option>Bufandas</option>
-          <option>Mantas</option>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!imageFile) return alert("Por favor selecciona una imagen");
 
-        </select>
+    setLoading(true);
 
-        <input
-          type="number"
-          placeholder="Precio"
-        />
+    // Ac� est� la configuraci�n de Cloudinary -> NO TOCAR!!!!
+    const data = new FormData();
+    data.append("file", imageFile);
+    data.append("upload_preset", "kathy-wool-upload-image");
+    data.append("folder", "kathy-wool-images");
 
-        <textarea
-          placeholder="Descripción del producto"
-        />
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dorfpavlv/image/upload",
+        { method: "POST", body: data }
+      );
 
-        <input
-          type="text"
-          placeholder="URL de imagen"
-        />
+      const fileData = await response.json();
 
-        <div className="form-actions">
+      if (response.ok) {
+        const finalData = { ...formData, imageUrl: fileData.secure_url };
+        console.log("Imagen subida", finalData);
+        try {
+          const newProductForDB = {
+            name: finalData.title,
+            category_id: categoryId,
+            description: finalData.description,
+            price: finalData.price,
+            stock: 1,
+            url_image: finalData.imageUrl,
+            isactive: true
+          };
+          console.log("Producto a enviar al backend:", newProductForDB);
+          await axios.post("http://localhost:3000/products", newProductForDB);
+        } catch (error) {
+          console.error("Error al crear el producto:", error);
+        }
+        alert("Producto creado con éxito");
+      }
+    } catch (error) {
+      console.error("Error al subir:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-          <button className="btn-primary">
-            Agregar Producto
-          </button>
+  return (
+    <div className="container-fluid bg-light min-vh-100 d-flex align-items-center justify-content-center py-5">
+      <div className="card shadow-sm border-0 rounded-4 p-4" style={{ maxWidth: '600px', width: '100%' }}>
 
-          <button className="btn-secondary">
-            Cancelar
-          </button>
-
+        {/* Encabezado */}
+        <div className="text-center mb-4">
+          <div
+            className="rounded-circle d-inline-flex align-items-center justify-content-center text-white mb-3"
+            style={{ width: '60px', height: '60px', backgroundColor: pinkColor, fontSize: '30px' }}
+          >
+            +
+          </div>
+          <h2 className="fw-bold" style={{ color: '#1a1d2e' }}>Agregar Nuevo Dise�o</h2>
+          <p className="text-muted">Agrega un nuevo producto a la tienda</p>
         </div>
 
-      </form>
+        <form onSubmit={handleSubmit}>
 
+          {/* Zona de Carga de Imagen */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold text-secondary">Im�genes del Producto</label>
+            <div
+              className="position-relative border rounded-3 p-5 text-center bg-white"
+              style={{ borderStyle: 'dashed', borderWidth: '2px', borderColor: '#dee2e6' }}
+            >
+              <input
+                type="file"
+                className="position-absolute top-0 start-0 w-100 h-100 opacity-0 cursor-pointer"
+                onChange={handleFileChange}
+                accept="image/*"
+              />
+              <div className="text-muted">
+                <span style={{ fontSize: '40px' }}>??</span>
+                <p className="mb-1 fw-medium text-dark">Haz clic para subir im�genes o arrastra aqu�</p>
+                <small>PNG, JPG hasta 10MB (m�ximo 5 im�genes)</small>
+              </div>
+              {previewUrl && (
+                <img src={previewUrl} alt="Preview" className="mt-3 rounded shadow-sm" style={{ maxHeight: '150px' }} />
+              )}
+            </div>
+          </div>
+
+          {/* T�tulo */}
+          <div className="mb-3">
+            <label className="form-label fw-semibold text-secondary">T�tulo del Producto</label>
+            <div className="input-group">
+              <span className="input-group-text bg-white border-end-0 text-muted">???</span>
+              <input
+                type="text"
+                name="title"
+                className="form-control border-start-0 ps-0"
+                placeholder="Ej: Amigurumi Osito de Peluche"
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Categor�a */}
+          <div className="mb-3">
+            <label htmlFor="categoryId" className='form-label'>Categoria:</label>
+            <select id="categoryId" className='form-select' value={categoryId} onChange={(e) => {
+              setCategoryId(e.target.value);
+            }}>
+              <option value="0">Todas las categorias</option>
+              {categories.map((category) => (
+                <option
+                  key={category.category_id}
+                  value={category.category_id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Precio */}
+          <div className="mb-3">
+            <label className="form-label fw-semibold text-secondary">Precio</label>
+            <div className="input-group">
+              <span className="input-group-text bg-white border-end-0 text-muted">$</span>
+              <input
+                type="number"
+                name="price"
+                className="form-control border-start-0 ps-0"
+                placeholder="0"
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Descripci�n */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold text-secondary">Descripci�n</label>
+            <textarea
+              name="description"
+              className="form-control"
+              rows="4"
+              placeholder="Describe tu producto: materiales, tama�o, cuidados, etc."
+              onChange={handleInputChange}
+            ></textarea>
+          </div>
+
+          {/* Botones */}
+          <div className="d-flex gap-3">
+            <button type="button" className="btn btn-light flex-grow-1 py-2 fw-semibold text-secondary">
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="btn text-white flex-grow-1 py-2 fw-semibold"
+              disabled={loading}
+              style={{ backgroundColor: pinkColor, border: 'none' }}
+            >
+              {loading ? 'Subiendo...' : 'Agregar Dise�o'}
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
+  );
+};
 
-  )
-
-}
-
-export default NewProduct
+export default NewProduct;

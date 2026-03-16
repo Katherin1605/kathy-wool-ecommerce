@@ -5,7 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const API_URL = 'https://69a9119832e2d46caf45190f.mockapi.io/api/v1/users';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const Registro = () => {
   const { register } = useUser();
@@ -32,21 +32,21 @@ const Registro = () => {
     }
 
     try {
-      const { data } = await axios.post(API_URL, { name, email, password, role: 'Cliente' });
-      register(data.name, data.email, data.password, data.role);
-      setSuccess(`¡Bienvenido/a ${data.name}! Cuenta creada exitosamente.`);
-      setTimeout(() => navigate('/'), 1500);
+      const { data } = await axios.post(`${API_URL}/users`, { name, email, password, role: 'cliente' });
+      register(data.user.name, data.user.email, data.user.password, data.user.role);
+      setSuccess(`¡Bienvenido/a ${data.user.name}! Cuenta creada exitosamente.`);
+      setTimeout(() => navigate('/login'), 1500);
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al registrar usuario. Intenta de nuevo.');
+      setError(err.response?.data?.error || 'Error al registrar usuario. Intenta de nuevo.');
     }
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-page">
+    <div className="d-flex justify-content-center align-items-center vh-50 bg-page">
       <div className="card shadow-sm p-4 border-0 form-card form-card--narrow">
         <div className="text-center mb-4 mt-2">
           <div className="icon-circle icon-circle--sm d-inline-flex mb-3">

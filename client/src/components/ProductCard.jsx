@@ -1,19 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCart } from "../context/CartContext";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../hooks/useAuth"
+import { useUser } from "../context/UserContext"
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const ProductCard = (props) => {
 
     const { id, name, price, image, stars } = props
+    const { favorites, setFavorites } = useUser();
     const [liked, setLiked] = useState(false);
     const { addToCart } = useCart();
-    const { isAdmin } = useAuth()
+    const { isAdmin, isLoggedIn } = useAuth()
+    const { token } = useUser()
     const navigate = useNavigate();
 
-    const toggleLike = () => {
-        setLiked(!liked);
+    useEffect(() => {
+        setLiked(favorites.includes(id));
+    }, [favorites, id]);
+
+    const toggleLike = async () => {
+        if (!isLoggedIn) return navigate('/login');
+        try {
+            if (liked) {
+                await axios.delete(`${API_URL}/users/me/favorites/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+            } else {
+                await axios.post(`${API_URL}/users/me/favorites`, { productId: id }, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setFavorites(prev => [...prev, id]);
+            }
+            setLiked(!liked);
+        } catch (error) {
+            console.error('Error al actualizar favorito', error);
+        }
     };
 
     const handleAddToCart = () => {
@@ -54,7 +79,7 @@ const ProductCard = (props) => {
                         <div className='col p-2'>
 
                             <p className="card-text price-text mb-0">
-                                ${Number(price).toFixed(2)}
+                                ${Intl.NumberFormat('es-CL').format(price)}
                             </p>
 
                         </div>
