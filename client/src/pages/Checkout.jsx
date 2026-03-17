@@ -28,7 +28,7 @@ function Checkout() {
 
         const newOrder = generateOrderNumber()
 
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+        const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com'
 
         try {
 

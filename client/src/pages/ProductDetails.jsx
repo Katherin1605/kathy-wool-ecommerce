@@ -16,7 +16,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/products/${id}`);
+                const response = await axios.get(`http://kathy-wool-ecommerce.onrender.com/products/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error("Error al obtener el producto", error);

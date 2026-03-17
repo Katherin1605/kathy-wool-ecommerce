@@ -15,7 +15,7 @@ const Products = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/products", {
+                const response = await axios.get("http://kathy-wool-ecommerce.onrender.com/products", {
                     params: {
                         order_by: orderBy,
                         category_id: categoryId,
@@ -34,7 +34,7 @@ const Products = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/categories");
+                const response = await axios.get("http://kathy-wool-ecommerce.onrender.com/categories");
                 setCategories(response.data);
             } catch (err) {
                 console.error("Error fetching categories:", err);

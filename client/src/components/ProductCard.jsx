@@ -6,7 +6,7 @@ import { useUser } from "../context/UserContext"
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com';
 
 const ProductCard = (props) => {
 
