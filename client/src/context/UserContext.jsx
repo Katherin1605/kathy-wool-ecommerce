@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
   const [email, setEmail] = useState(() => localStorage.getItem('email') || sessionStorage.getItem('email'));
   const [favorites, setFavorites] = useState([]);
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const fetchFavorites = async () => {
   if (!token) return;

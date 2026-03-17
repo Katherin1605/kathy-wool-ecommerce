@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import AdminProducts from "./AdminProducts"
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com'
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com'
 
 const initialForm = {
     name: "",

@@ -5,7 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const Registro = () => {
   const { register } = useUser();

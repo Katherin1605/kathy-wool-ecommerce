@@ -22,7 +22,7 @@ const NewProduct = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://kathy-wool-ecommerce.onrender.com/categories");
+        const response = await axios.get("https://kathy-wool-ecommerce.onrender.com/categories");
         setCategories(response.data);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -78,7 +78,7 @@ const NewProduct = () => {
             isactive: true
           };
           console.log("Producto a enviar al backend:", newProductForDB);
-          await axios.post("http://kathy-wool-ecommerce.onrender.com/products", newProductForDB);
+          await axios.post("https://kathy-wool-ecommerce.onrender.com/products", newProductForDB);
         } catch (error) {
           console.error("Error al crear el producto:", error);
         }

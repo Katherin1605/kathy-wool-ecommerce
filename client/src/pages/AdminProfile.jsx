@@ -3,7 +3,7 @@ import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://kathy-wool-ecommerce.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const avatars = [
   'https://api.dicebear.com/9.x/thumbs/svg?seed=Felix',

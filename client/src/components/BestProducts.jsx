@@ -8,7 +8,7 @@ const BestProducts = () => {
     const [bestProducts, setBestProducts] = useState([]);
 
 
-    const API_URL = "http://kathy-wool-ecommerce.onrender.com/best-products";
+    const API_URL = "https://kathy-wool-ecommerce.onrender.com/best-products";
 
     useEffect(() => {
         const fetchProducts = async () => {
