@@ -32,7 +32,7 @@ const BestProducts = () => {
 
     return (
         <div>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex flex-wrap justify-content-center">
                 {bestProducts.map((product) => (
                     <ProductCard
                         key={product.product_id}

@@ -47,7 +47,7 @@ const Products = () => {
         <div className='d-flex flex-column align-items-center m-4'>
             <h2>Galería de productos</h2>
 
-            <div className='row'>
+            <div className='row g-3 w-100'>
                 <div className='col'>
                     <label htmlFor="orderBy" className='form-label'>Ordenar por:</label>
                     <select id="orderBy" className='form-select' value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
@@ -79,7 +79,7 @@ const Products = () => {
 
             <div className="d-flex justify-content-center align-items-center mt-4 gap-3">
                 <button
-                    className="btn btn-outline-primary"
+                    className="btn-pagination"
                     disabled={page <= 1}
                     onClick={() => setPage(page - 1)}
                 >
@@ -89,7 +89,7 @@ const Products = () => {
                 <span className="fw-bold">Pagina {page}</span>
 
                 <button
-                    className="btn btn-outline-primary"
+                    className="btn-pagination"
                     disabled={products.length < limit}
                     onClick={() => setPage(page + 1)}
                 >
@@ -114,7 +114,7 @@ const Products = () => {
 
             <div className="d-flex justify-content-center align-items-center mt-4 gap-3">
                 <button
-                    className="btn btn-outline-primary"
+                    className="btn-pagination"
                     disabled={page <= 1}
                     onClick={() => setPage(page - 1)}
                 >
@@ -124,7 +124,7 @@ const Products = () => {
                 <span className="fw-bold">Pagina {page}</span>
 
                 <button
-                    className="btn btn-outline-primary"
+                    className="btn-pagination"
                     disabled={products.length < limit}
                     onClick={() => setPage(page + 1)}
                 >

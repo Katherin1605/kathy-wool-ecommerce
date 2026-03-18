@@ -2,7 +2,7 @@ function Footer() {
     return (
 
         <footer className="footer">
-            <div className="d-flex flex-row justify-content-around align-items-center">
+            <div className="d-flex flex-column flex-md-row justify-content-around align-items-center">
                 <div className="d-flex flex-column">
                 <div className="fw-bold d-flex flex-row" to="/">
                     <div className="navbar-brand logo-icon d-flex align-items-center justify-content-center me-2">

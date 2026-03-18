@@ -30,71 +30,83 @@ function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm px-4">
-      
+
       {/* Logo Tienda KathyWool */}
       <NavLink className="navbar-brand fw-bold d-flex align-items-center" to="/">
         <i className="bi bi-shop me-2" aria-hidden></i>
         <h4>kathyWool</h4>
       </NavLink>
 
+      {/* Botón hamburguesa */}
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      {/* NUEVO: Todo el contenido dentro del collapse */}
+  <div className="collapse navbar-collapse" id="navbarContent">
+
       {/* Menu Central */}
-      <div className="navbar-nav mx-auto d-flex gap-4 align-items-center">
-        <NavLink className = "nav-link" to="/"> Inicio </NavLink>
-        <NavLink className = "nav-link" to="/products"> <i className="bi bi-grid-3x3" aria-hidden> </i> Productos </NavLink>
-        <NavLink className = "nav-link" to="/contact">Contacto</NavLink>
+      <div className="navbar-nav mx-auto d-flex flex-column flex-lg-row gap-2 align-items-center mt-3 mt-lg-0">
+        <NavLink className="nav-link" to="/"> Inicio </NavLink>
+        <NavLink className="nav-link" to="/products"> <i className="bi bi-grid-3x3" aria-hidden> </i> Productos </NavLink>
+        <NavLink className="nav-link" to="/contact">Contacto</NavLink>
       </div>
 
       {/* Menu derecho: carrito, inicio sesion, registro */}
-      <div className="d-flex gap-4 align-items-center">
-      
-          {/* Menu derecho: carrito */}
-          <NavLink
-            className={`nav-link d-flex align-items-center gap-2 ${isAdmin ? "disabled opacity-50" : ""}`}
-            to={isAdmin ? "#" : "/cart"}
-            onClick={(e) => {if (isAdmin) e.preventDefault()}}
-            title={isAdmin ? "Los administradores no pueden comprar" : ""}
-          >
-            <div className="position-relative">
-              <i className="bi bi-cart fs-5"></i>
-              {items > 0 && (
-                <span className="cart-badge">
-                  {items}
-                </span>
-              )}
-            </div>
+      <div className="d-flex flex-column flex-lg-row gap-4 align-items-center mt-3 mt-lg-0">
 
-              {subtotal > 0 && (
-              <span className="fw-bold">
-                ${subtotal.toLocaleString('es-CL')}
+        {/* Menu derecho: carrito */}
+        {!isAdmin && (
+        <NavLink
+          className={`nav-link d-flex align-items-center gap-2`}
+          to={isAdmin ? "#" : "/cart"}
+        >
+          <div className="position-relative">
+            <i className="bi bi-cart fs-5"></i>
+            {items > 0 && (
+              <span className="cart-badge">
+                {items}
               </span>
-              )}
+            )}
+          </div>
 
-          </NavLink>
+          {subtotal > 0 && (
+            <span className="fw-bold">
+              ${subtotal.toLocaleString('es-CL')}
+            </span>
+          )}
 
-          {/* Menu derecho: inicio sesion */}
+        </NavLink>
+        )}
+
+        {/* Menu derecho: inicio sesion */}
         {isLoggedIn ? (
           <>
             {options.map((option) => (
-              <NavLink key={option.label} className = "nav-link" to={option.to}>
+              <NavLink key={option.label} className="nav-link" to={option.to}>
                 <i className={`${option.icon} me-2`}></i>
                 {option.field ? user[option.field] : option.label}
               </NavLink>
             ))}
 
-          <button
-            className="nav-link btn btn-link"
-            onClick={() => { logout(); navigate("/"); }}
-          >
-            <i className="bi bi-box-arrow-right me-2"></i>
+            <button
+              className="nav-link btn btn-link"
+              onClick={() => { logout(); navigate("/"); }}
+            >
+              <i className="bi bi-box-arrow-right me-2"></i>
               Salir
-          </button>
+            </button>
 
-        </>
+          </>
 
         ) : (
-        <>
+          <>
 
-          {/* Menu derecho: iniciar sesion y registro */}
+            {/* Menu derecho: iniciar sesion y registro */}
             <NavLink className="btn" to="/login">
               <i className="bi bi-box-arrow-in-right me-2"></i>
               Iniciar sesión
@@ -104,9 +116,11 @@ function Navbar() {
               <i className="bi bi-person-plus me-2"></i>
               Registrarse
             </NavLink>
-        </>
-      )}
+          </>
+        )}
       </div>
+  </div>
+
     </nav>
   )
 }

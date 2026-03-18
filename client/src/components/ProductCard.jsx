@@ -64,9 +64,11 @@ const ProductCard = (props) => {
                         alt={name}
                         style={{ minWidth: '110%', transform: 'translateX(-4.5%)' }}
                     />
-                    <button onClick={toggleLike} className='btn-liked btn-liked-position'>
-                        <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
-                    </button>
+                    {!isAdmin && (
+                        <button onClick={toggleLike} className='btn-liked btn-liked-position'>
+                            <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
+                        </button>
+                    )}
                 </div>
 
 
@@ -101,7 +103,8 @@ const ProductCard = (props) => {
                         </div>
 
                     </div>
-
+                    
+                    {!isAdmin && (
                     <button
                         onClick={handleAddToCart}
                         type="button"
@@ -112,6 +115,7 @@ const ProductCard = (props) => {
                         <i className="bi bi-cart me-2" aria-hidden></i>
                         Agregar al Carrito
                     </button>
+                    )}
 
                     {isAdmin && (
                         <small className="text-muted d-block mt-2">

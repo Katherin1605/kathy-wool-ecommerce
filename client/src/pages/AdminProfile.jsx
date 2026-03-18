@@ -93,11 +93,11 @@ const AdminProfile = () => {
       {/* Tarjeta de perfil */}
       {isEditing ? (
         <div className="card border-0 shadow-sm p-4 mb-4">
-          <div className="d-flex align-items-start gap-4">
-            <div className="profile-avatar-wrapper flex-shrink-0">
+          <div className="d-flex flex-column flex-md-row align-items-start gap-4">
+            <div className="profile-avatar-wrapper flex-shrink-0 align-self-center">
               <div className="profile-avatar">
                 {user.profile_image
-                  ? <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                  ? <img src={user.profile_image} alt="Avatar" className='img-profile' />
                   : <i className="bi bi-person-fill" aria-hidden></i>
                 }
               </div>
@@ -129,11 +129,11 @@ const AdminProfile = () => {
         </div>
       ) : (
         <div className="card border-0 shadow-sm p-4 mb-4">
-          <div className="d-flex align-items-center gap-4">
+          <div className="d-flex flex-column flex-md-row align-items-center gap-4">
             <div className="profile-avatar-wrapper">
               <div className="profile-avatar">
                 {user.profile_image
-                  ? <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                  ? <img src={user.profile_image} alt="Avatar" className='img-profile' />
                   : <i className="bi bi-person-fill" aria-hidden></i>
                 }
               </div>
@@ -194,10 +194,10 @@ const AdminProfile = () => {
           <div className="d-flex flex-column gap-3">
             {orders.map((order) => (
               <div key={order.order_id} className="card border p-3">
-                <div className="d-flex justify-content-between align-items-center mb-3">
+                <div className="d-flex flex-column flex-md-row justify-content-between mb-3 gap-1">
                   <div>
-                    <span className="fw-semibold">Pedido #{order.order_id}</span>
-                    <span className="text-muted text-sm ms-3">{order.customer}</span>
+                    <span className="fw-semibold d-block d-md-inline">Pedido #{order.order_id}</span>
+                    <span className="text-muted text-sm ms-md-3">{order.customer}</span>
                     <span className="text-muted text-sm ms-2">
                       {new Date(order.date).toLocaleDateString('es-CL')}
                     </span>

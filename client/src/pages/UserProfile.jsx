@@ -109,15 +109,18 @@ const UserProfile = () => {
     }
 
     return (
-        <div className="profile-container mt-4">
+        <div className="profile-container">
             {isEditing ? (
                 <div className="card border-0 shadow-sm p-4 mb-4">
-                    <div className="d-flex align-items-start gap-4">
-                        <div className="profile-avatar-wrapper flex-shrink-0">
+                    <div className="d-flex flex-column flex-md-row align-items-start gap-4">
+                        <div className="profile-avatar-wrapper flex-shrink-0 align-self-center">
                             <div className="profile-avatar">
-                                <i className="bi bi-person-fill" aria-hidden></i>
+                                {user.profile_image
+                                    ? <img src={user.profile_image} alt="Avatar" className='img-profile' />
+                                    : <i className="bi bi-person-fill" aria-hidden></i>
+                                }
                             </div>
-                            <button className="profile-avatar-edit" aria-label="Cambiar foto">
+                            <button className="profile-avatar-edit" aria-label="Cambiar avatar" onClick={() => setShowAvatarPicker(true)}>
                                 <i className="bi bi-camera-fill"></i>
                             </button>
                         </div>
@@ -132,7 +135,7 @@ const UserProfile = () => {
                             </div>
                             <div className="mb-4">
                                 <label className="form-label text-muted fw-semibold text-sm">Biografía</label>
-                                <textarea name="bio" className="form-control shadow-none text-md" rows={3} style={{ resize: 'none' }} value={form.bio} onChange={handleChange} />
+                                <textarea name="bio" className="form-control shadow-none text-md profile-bio-textarea" rows={3} style={{ resize: 'none' }} value={form.bio} onChange={handleChange} />
                             </div>
                             <div className="d-flex gap-2">
                                 <button className="btn-primary px-4" onClick={handleSave}>
@@ -147,11 +150,11 @@ const UserProfile = () => {
                 </div>
             ) : (
                 <div className="card border-0 shadow-sm p-4 mb-4">
-                    <div className="d-flex align-items-center gap-4">
+                    <div className="d-flex flex-column flex-md-row align-items-center gap-4">
                         <div className="profile-avatar-wrapper">
                             <div className="profile-avatar">
                                 {user.profile_image
-                                    ? <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                                    ? <img src={user.profile_image} alt="Avatar" className='img-profile' />
                                     : <i className="bi bi-person-fill" aria-hidden></i>
                                 }
                             </div>
@@ -212,11 +215,21 @@ const UserProfile = () => {
                         {favorites.map(fav => (
                             <div key={fav.product_id} className="col-6 col-md-4 col-lg-3">
                                 <div className="card border-0 shadow-sm h-100">
-                                    <img src={fav.url_image} alt={fav.name} className="card-img-top" style={{ height: '160px', objectFit: 'cover' }} />
-                                    <div className="card-body p-2">
-                                        <p className="fw-semibold text-sm mb-1">{fav.name}</p>
-                                        <p className="text-muted text-sm mb-2">${Intl.NumberFormat('es-CL').format(fav.price)}</p>
-                                        <button className="btn btn-sm btn-outline-danger w-100" onClick={() => removeFavorite(fav.product_id)}>
+                                    <img
+                                        src={fav.url_image}
+                                        alt={fav.name}
+                                        className="card-img-top"
+                                        style={{ height: '180px', objectFit: 'cover', borderRadius: '10px 10px 0 0' }}
+                                    />
+                                    <div className="card-body d-flex flex-column p-3">
+                                        <p className="fw-semibold mb-1">{fav.name}</p>
+                                        <p className="text-primary-accent fw-bold mb-2">
+                                            ${Intl.NumberFormat('es-CL').format(fav.price)}
+                                        </p>
+                                        <button
+                                            className="btn btn-sm btn-outline-danger w-100 mt-auto"
+                                            onClick={() => removeFavorite(fav.product_id)}
+                                        >
                                             <i className="bi bi-heart-fill me-1"></i>Quitar
                                         </button>
                                     </div>
@@ -245,9 +258,9 @@ const UserProfile = () => {
                     <div className="d-flex flex-column gap-3">
                         {orders.map(order => (
                             <div key={order.order_id} className="card border p-3">
-                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div className="d-flex flex-column flex-md-row justify-content-between mb-3 gap-1">
                                     <div>
-                                        <span className="fw-semibold">Pedido #{order.order_id}</span>
+                                        <span className="fw-semibold d-block d-md-inline">Pedido #{order.order_id}</span>
                                         <span className="text-muted text-sm ms-3">
                                             {new Date(order.date).toLocaleDateString('es-CL')}
                                         </span>

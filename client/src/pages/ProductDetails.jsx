@@ -49,11 +49,11 @@ const ProductDetails = () => {
     return (
         <div>
             <div className='row m-4'>
-                <div className='col-auto'>
-                    <img src={product.url_image} alt={product.name} className='rounded-5' />
+                <div className='col-12 col-md-6'>
+                    <img src={product.url_image} alt={product.name} className='product-img' />
                 </div>
 
-                <div className='col'>
+                <div className='col-12 col-md-6'>
                     <p className='category'>{product.category}</p>
                     <div className='row'>
                         <h1 className='col-auto'>{product.name}</h1>
