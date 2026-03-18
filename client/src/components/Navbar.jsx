@@ -87,7 +87,7 @@ function Navbar() {
         {isLoggedIn ? (
           <>
             {options.map((option) => (
-              <NavLink key={option.label} className="nav-link" to={option.to}>
+              <NavLink key={option.label} className="nav-link" to={option.to} end>
                 <i className={`${option.icon} me-2`}></i>
                 {option.field ? user[option.field] : option.label}
               </NavLink>

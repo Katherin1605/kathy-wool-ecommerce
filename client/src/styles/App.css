@@ -288,7 +288,6 @@ max-width:600px;
 
 .feature {
     text-align: center;
-    max-width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
