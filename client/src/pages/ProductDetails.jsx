@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from "../context/CartContext";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductDetails = () => {
@@ -39,6 +40,15 @@ const ProductDetails = () => {
             price: product.price,
             image: product.url_image,
             quantity: quantity
+        });
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Producto agregado 🛒',
+            showConfirmButton: false,
+            timer: 1500
         });
     };
 
