@@ -40,7 +40,7 @@ export const createOrder = async (userId, cartItems, total) => {
 export const getAllOrders = async () => {
     const query = `
         SELECT o.order_id, o.date, o.total, u.name as customer, u.email,
-               od.amount, od.currentprice, p.name as product_name, p.url_image
+            od.amount, od.currentprice, p.name as product_name, p.url_image
         FROM orders o
         JOIN users u ON o.user_id = u.user_id
         JOIN orderdetails od ON o.order_id = od.order_id
