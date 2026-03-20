@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../hooks/useAuth"
+import { useUser } from "../context/UserContext"
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const ProductDetails = () => {
     const [liked, setLiked] = useState(false);
@@ -12,6 +16,9 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(true);
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
+    const { isAdmin, isLoggedIn } = useAuth()
+    const { token, favorites, setFavorites } = useUser()
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -28,6 +35,9 @@ const ProductDetails = () => {
 
         getProduct();
     }, [id]);
+    useEffect(() => {
+        setLiked(favorites.includes(id));
+    }, [favorites, id]);
 
     if (loading) return <h2>Cargando detalle...</h2>;
     if (!product) return <h2>Producto no encontrado</h2>;
@@ -52,8 +62,23 @@ const ProductDetails = () => {
         });
     };
 
-    const toggleLike = () => {
-        setLiked(!liked);
+    const toggleLike = async () => {
+        if (!isLoggedIn) return navigate('/login');
+        try {
+            if (liked) {
+                await axios.delete(`${API_URL}/users/me/favorites/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+            } else {
+                await axios.post(`${API_URL}/users/me/favorites`, { productId: id }, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setFavorites(prev => [...prev, id]);
+            }
+            setLiked(!liked);
+        } catch (error) {
+            console.error('Error al actualizar favorito', error);
+        }
     };
 
     return (
@@ -62,14 +87,15 @@ const ProductDetails = () => {
                 <div className='col-12 col-md-6'>
                     <img src={product.url_image} alt={product.name} className='product-img' />
                 </div>
-
                 <div className='col-12 col-md-6'>
                     <p className='category'>{product.category}</p>
-                    <div className='row'>
-                        <h1 className='col-auto'>{product.name}</h1>
-                        <button onClick={toggleLike} className='btn-liked col-auto'>
-                            <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
-                        </button>
+                    <div className='d-flex align-items-center gap-3'>
+                        <h1 className='mb-0'>{product.name}</h1>
+                        {!isAdmin && (
+                            <button onClick={toggleLike} className='btn-liked'>
+                                <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
+                            </button>
+                            )}
                     </div>
                     <p><strong>
                         {Array.from({ length: 5 }, (_, i) => (
@@ -101,32 +127,35 @@ const ProductDetails = () => {
                             <p>100% artesanal</p>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-start align-items-center mb-3'>
-                        <p className='m-3'><strong>Cantidad:</strong></p>
+                    {!isAdmin && (
+                        <div className='d-flex justify-content-start align-items-center mb-3'>
+                            <p className='m-3'><strong>Cantidad:</strong></p>
+                            <button
+                                onClick={() => setQuantity(prev => Math.max(prev - 1, 1))}
+                                className='detail-minus'
+                            >-</button>
+                            <span className='p-2'>
+                                {quantity}
+                            </span>
+                            <button
+                                onClick={() => setQuantity(prev => prev + 1)}
+                                className='detail-plus'
+                            >+</button>
+                        </div>
+                    )}
+                    {!isAdmin && (
                         <button
-                            onClick={() => setQuantity(prev => Math.max(prev - 1, 1))}
-                            className='detail-minus'
-                        >-</button>
-                        <span className='p-2'>
-                            {quantity}
-                        </span>
-                        <button
-                            onClick={() => setQuantity(prev => prev + 1)}
-                            className='detail-plus'
-                        >+</button>
-                    </div>
-
-                    <button
-                        onClick={handleAddToCart}
-                        type="button"
-                        className="btn-add-cart mb-3"
-                        aria-label="Agregar al carrito"
-                    >
-                        <i className="bi bi-cart me-2" aria-hidden></i>
-                        Agregar al Carrito
-                    </button>
-
-                    <hr/>
+                            onClick={handleAddToCart}
+                            type="button"
+                            className="btn-add-cart"
+                            aria-label="Agregar al carrito"
+                            disabled={isAdmin}
+                        >
+                            <i className="bi bi-cart me-2" aria-hidden></i>
+                            Agregar al Carrito
+                        </button>
+                    )}
+                    <hr />
 
                     <div className='d-flex justify-content-evenly'>
 
