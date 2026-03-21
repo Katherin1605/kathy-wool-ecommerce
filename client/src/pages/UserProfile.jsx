@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useCard } from '../context/CartContext';
+import { useCart } from '../context/CartContext';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const UserProfile = () => {
     const { user, token, updateProfile } = useUser();
-    const { addToCart } = useCard();
+    const { addToCart } = useCart();
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
