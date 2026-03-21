@@ -65,7 +65,7 @@ const ProductDetails = () => {
     }, [id, token]);
 
     useEffect(() => {
-        setLiked(favorites.includes(id));
+        setLiked(favorites.includes(Number(id)));
     }, [favorites, id]);
 
     if (loading) return <h2>Cargando detalle...</h2>;
