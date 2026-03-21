@@ -11,13 +11,17 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.on
 
 const ProductDetails = () => {
     const [liked, setLiked] = useState(false);
+    const [reviews, setReviews] = useState([]);
+    const [myRating, setMyRating] = useState(0);
+    const [hasPurchased, setHasPurchased] = useState(false);
+    const [hoverRating, setHoverRating] = useState(0);
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
-    const { isAdmin, isLoggedIn } = useAuth()
-    const { token, favorites, setFavorites } = useUser()
+    const { isAdmin, isLoggedIn } = useAuth();
+    const { token, favorites, setFavorites } = useUser();
     const navigate = useNavigate();
 
 
@@ -35,6 +39,31 @@ const ProductDetails = () => {
 
         getProduct();
     }, [id]);
+
+    useEffect(() => {
+        axios.get(`${API_URL}/products/${id}/reviews`)
+            .then(res => setReviews(res.data))
+            .catch(err => console.error('Error cargando reviews', err));
+
+        if (token) {
+            axios.get(`${API_URL}/products/${id}/my-review`, {
+                headers: { Authorization: `Bearer ${token}` }
+            }).then(res => {
+                if (res.data) setMyRating(res.data.stars);
+            }).catch(() => { });
+
+            // Verificar si compró revisando sus órdenes
+            axios.get(`${API_URL}/users/me/orders`, {
+                headers: { Authorization: `Bearer ${token}` }
+            }).then(res => {
+                const purchased = res.data.some(order =>
+                    order.items.some(item => String(item.product_id || item.name) && true)
+                );
+                setHasPurchased(purchased);
+            }).catch(() => { });
+        }
+    }, [id, token]);
+
     useEffect(() => {
         setLiked(favorites.includes(id));
     }, [favorites, id]);
@@ -81,6 +110,41 @@ const ProductDetails = () => {
         }
     };
 
+    const handleRate = async (stars) => {
+        if (!isLoggedIn) return navigate('/login');
+        try {
+            await axios.post(`${API_URL}/products/${id}/reviews`, { stars }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setMyRating(stars);
+            const res = await axios.get(`${API_URL}/products/${id}/reviews`);
+            setReviews(res.data);
+            const prodRes = await axios.get(`${API_URL}/products/${id}`);
+            setProduct(prodRes.data);
+        } catch (error) {
+            console.error('Error al calificar:', error.response?.status, error.response?.data);
+            if (error.response?.status === 403) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'Solo puedes calificar productos que hayas comprado',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            } else {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Error al calificar',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        }
+    };
+
     return (
         <div>
             <div className='row m-4'>
@@ -95,20 +159,44 @@ const ProductDetails = () => {
                             <button onClick={toggleLike} className='btn-liked'>
                                 <i className={liked ? 'bi bi-heart-fill' : 'bi bi-heart'}></i>
                             </button>
-                            )}
+                        )}
                     </div>
-                    <p><strong>
-                        {Array.from({ length: 5 }, (_, i) => (
-                            <span
-                                key={i}
-                                className={i < product.stars ? 'star-filled' : 'star-empty'}
-                                aria-hidden
-                            >
-                                &#9733;
-                            </span>
-                        ))
-                        }
-                    </strong></p>
+                                        {/* Estrellas promedio + conteo */}
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                        <span>
+                            {Array.from({ length: 5 }, (_, i) => (
+                                <span key={i} className={i < product.stars ? 'star-filled' : 'star-empty'} style={{ fontSize: '1.2rem' }}>
+                                    &#9733;
+                                </span>
+                            ))}
+                        </span>
+                        <span className="text-muted text-sm">
+                            ({product.review_count} {product.review_count == 1 ? 'calificación' : 'calificaciones'})
+                        </span>
+                    </div>
+
+                    {/* Calificar — solo si está logueado y no es admin */}
+                    {isLoggedIn && !isAdmin && (
+                        <div className="mb-3 p-3" style={{ background: 'var(--bg-card-alt)', borderRadius: '10px' }}>
+                            <p className="fw-semibold mb-2 text-sm">
+                                {myRating > 0 ? 'Tu calificación:' : 'Califica este producto:'}
+                            </p>
+                            <div>
+                                {Array.from({ length: 5 }, (_, i) => (
+                                    <span
+                                        key={i}
+                                        onClick={() => handleRate(i + 1)}
+                                        onMouseEnter={() => setHoverRating(i + 1)}
+                                        onMouseLeave={() => setHoverRating(0)}
+                                        style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                                        className={i < (hoverRating || myRating) ? 'star-filled' : 'star-empty'}
+                                    >
+                                        &#9733;
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                     <p className='price' style={{ fontSize: '25px' }}>${product.price}</p>
                     <p>{product.description}</p>
 

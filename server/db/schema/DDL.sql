@@ -50,7 +50,9 @@ CREATE TABLE reviews (
     reviews_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
-    stars INT CHECK (stars >= 1 AND stars <= 5)
+    stars INT CHECK (stars >= 1 AND stars <= 5),
+    created_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE(user_id, product_id)
 );
 
 CREATE TABLE cartDetails (

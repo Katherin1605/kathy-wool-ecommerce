@@ -1,7 +1,7 @@
 import pool from '../../db/config.js';
 import format from 'pg-format';
 
-export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page = 1, category_id = 0}) => {
+export const getProducts = async ({ order_by = 'product_id ASC', limit = 9, page = 1, category_id = 0 }) => {
     const [column, direction] = order_by.split(' ');
     const offset = (page - 1) * limit;
     try {
@@ -15,7 +15,7 @@ export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page 
             formattedQuery = format(
                 'SELECT p.product_id, p.name, p.category_id, p.description, p.price, p.stock, p.url_image, p.isactive, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id ORDER BY %s %s LIMIT %s OFFSET %s',
                 column, direction, limit, offset);
-            }
+        }
         const res = await pool.query(formattedQuery);
         return res.rows;
     } catch (error) {
@@ -26,7 +26,13 @@ export const getProducts = async ({order_by = 'product_id ASC', limit = 9, page 
 
 export const getProductById = async (id) => {
     const consultaSQL = {
-        text: 'SELECT p.product_id, p.name, p.price, p.url_image, COALESCE(CEIL(AVG(r.stars)),0) as stars FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id GROUP BY p.product_id HAVING p.product_id = $1',
+        text: `SELECT p.product_id, p.name, p.price, p.url_image, p.description, p.category_id, p.stock,
+                      COALESCE(CEIL(AVG(r.stars)),0) as stars,
+                      COUNT(r.reviews_id) as review_count
+               FROM products p
+               LEFT JOIN reviews r ON p.product_id = r.product_id
+               GROUP BY p.product_id
+               HAVING p.product_id = $1`,
         values: [id]
     };
     try {
@@ -50,7 +56,7 @@ export const getBestProducts = async () => {
     }
 };
 
-export const createProductModel = async ({ name, category_id, description, price, stock, url_image, isactive}) => {
+export const createProductModel = async ({ name, category_id, description, price, stock, url_image, isactive }) => {
     const consultaSQL = {
         text: 'INSERT INTO products (name, category_id, description, price, stock, url_image, isactive) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
         values: [name, category_id, description, price, stock, url_image, isactive]
