@@ -9,7 +9,7 @@ const verifyToken = async (req, res, next) => {
     const extractToken = token.split(' ')[1]
 
     const decoded = jwt.verify(extractToken, process.env.JWT_SECRET)
-      req.user = { id: decoded.user_id, email: decoded.email }
+      req.user = { user_id: decoded.user_id, email: decoded.email }
     next()
   }catch(error){
     res.status(400).json({message: 'el token es invalido'})

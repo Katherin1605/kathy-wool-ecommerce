@@ -15,7 +15,7 @@ export const getUserProfile = async (req, res) => {
 
   try {
 
-    const userId = req.user.id
+    const userId = req.user.user_id
 
     const user = await findUserById(userId)
 
@@ -35,7 +35,7 @@ export const getUserOrders = async (req, res) => {
 
   try {
 
-    const userId = req.user.id
+    const userId = req.user.user_id
 
     const orders = await findOrdersByUser(userId)
 
@@ -55,7 +55,7 @@ export const addFavorite = async (req, res) => {
 
   try {
 
-    const userId = req.user.id
+    const userId = req.user.user_id
     const { productId } = req.body
 
     await addFavoriteModel(userId, productId)
@@ -76,7 +76,7 @@ export const removeFavorite = async (req, res) => {
 
   try {
 
-    const userId = req.user.id
+    const userId = req.user.user_id
     const { productId } = req.params
 
     await removeFavoriteModel(userId, productId)
@@ -95,7 +95,7 @@ export const removeFavorite = async (req, res) => {
 
 export const getUserFavorites = async (req, res) => {
   try {
-    const userId = req.user.id
+    const userId = req.user.user_id
     const favorites = await getFavoritesByUser(userId)
     res.json(favorites)
   } catch (error) {
@@ -106,7 +106,7 @@ export const getUserFavorites = async (req, res) => {
 
 export const updateUserAvatar = async (req, res) => {
   try {
-    const userId = req.user.id
+    const userId = req.user.user_id
     const { profile_image } = req.body
     const user = await updateProfileImage(userId, profile_image)
     res.json({ profile_image: user.profile_image })
@@ -118,7 +118,7 @@ export const updateUserAvatar = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const userId = req.user.id
+    const userId = req.user.user_id
     const { name, email, profile_image, bio } = req.body
     const user = await updateUserModel(userId, name, email, profile_image, bio)
     res.json(user)
