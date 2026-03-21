@@ -1,7 +1,7 @@
 import pool from '../../db/config.js'
 import bcrypt from "bcryptjs";
 
-export const createUserModel = async({ name, email, password, role}) => {
+export const createUserModel = async ({ name, email, password, role }) => {
   const hashedPassword = await bcrypt.hash(password, 10)
   const SQLquery = {
     text: 'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
@@ -73,14 +73,12 @@ export const findOrdersByUser = async (userId) => {
 }
 
 export const addFavoriteModel = async (userId, productId) => {
-
   const query = `
     INSERT INTO favorites (user_id, product_id)
     VALUES ($1, $2)
+    ON CONFLICT (user_id, product_id) DO NOTHING
   `
-
   await pool.query(query, [userId, productId])
-
 }
 
 export const removeFavoriteModel = async (userId, productId) => {

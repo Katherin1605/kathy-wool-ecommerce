@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { useCard } from '../context/CartContext';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
 
 const UserProfile = () => {
     const { user, token, updateProfile } = useUser();
+    const { addToCart } = useCard();
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -219,15 +221,30 @@ const UserProfile = () => {
                                         src={fav.url_image}
                                         alt={fav.name}
                                         className="card-img-top"
-                                        style={{ height: '180px', objectFit: 'cover', borderRadius: '10px 10px 0 0' }}
+                                        style={{ height: '180px', objectFit: 'cover', borderRadius: '10px 10px 0 0', cursor: 'pointer' }}
+                                        onClick={() => navigate(`/products/${fav.product_id}`)}
                                     />
                                     <div className="card-body d-flex flex-column p-3">
-                                        <p className="fw-semibold mb-1">{fav.name}</p>
+                                        <p
+                                            className="fw-semibold mb-1"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => navigate(`/products/${fav.product_id}`)}
+                                        >
+                                            {fav.name}
+                                        </p>
                                         <p className="text-primary-accent fw-bold mb-2">
                                             ${Intl.NumberFormat('es-CL').format(fav.price)}
                                         </p>
                                         <button
-                                            className="btn btn-sm btn-outline-danger w-100 mt-auto"
+                                            className="btn-add-cart btn-sm w-100 mt-auto mb-2"
+                                            onClick={() => {
+                                                addToCart({ id: fav.product_id, name: fav.name, price: fav.price, image: fav.url_image });
+                                            }}
+                                        >
+                                            <i className="bi bi-cart me-1"></i>Agregar
+                                        </button>
+                                        <button
+                                            className="btn btn-sm btn-outline-danger w-100"
                                             onClick={() => removeFavorite(fav.product_id)}
                                         >
                                             <i className="bi bi-heart-fill me-1"></i>Quitar
