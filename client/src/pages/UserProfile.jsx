@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import Swal from 'sweetalert2';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
@@ -239,6 +241,14 @@ const UserProfile = () => {
                                             className="btn-add-cart btn-sm w-100 mt-auto mb-2"
                                             onClick={() => {
                                                 addToCart({ id: fav.product_id, name: fav.name, price: fav.price, image: fav.url_image });
+                                                Swal.fire({
+                                                    toast: true,
+                                                    position: 'top-end',
+                                                    icon: 'success',
+                                                    title: 'Producto agregado 🛒',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                });
                                             }}
                                         >
                                             <i className="bi bi-cart me-1"></i>Agregar
