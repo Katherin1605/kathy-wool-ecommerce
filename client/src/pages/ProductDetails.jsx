@@ -7,7 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce-mqxh.onrender.com';
 
 const ProductDetails = () => {
     const [liked, setLiked] = useState(false);
@@ -28,7 +28,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const response = await axios.get(`https://kathy-wool-ecommerce.onrender.com/products/${id}`);
+                const response = await axios.get(`https://kathy-wool-ecommerce-mqxh.onrender.com/products/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error("Error al obtener el producto", error);

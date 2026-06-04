@@ -7,7 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://kathy-wool-ecommerce-mqxh.onrender.com';
 
 const ProductCard = (props) => {
 
