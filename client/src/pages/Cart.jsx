@@ -76,7 +76,7 @@ const Cart = () => {
                 </div>
             ))}
 
-            <h4 className="mt-4">Total: ${subtotal.toFixed(2)}</h4>
+            <h4 className="mt-4">Total: ${Intl.NumberFormat('es-CL').format(subtotal)}</h4>
 
             <button
                 className={`btn mt-3 ${isLoggedIn ? "btn-cart-primary" : "btn-secondary"}`}
