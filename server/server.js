@@ -16,6 +16,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  // Forzar a que el navegador sepa que viaja texto/HTML en UTF-8
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  
+  // Desactivar caché temporalmente para evitar el error 304
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  
+  next();
+});
+
 app.use(productsRoutes);
 app.use(categoriesRoutes);
 app.use("/api", cartRoutes);
