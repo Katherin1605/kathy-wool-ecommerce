@@ -19,6 +19,10 @@ const pool = new pg.Pool({
   allowExitOnIdle: true
 });
 
+// FORZAR CODIFICACIÓN AL CONECTARSE
+pool.on('connect', (client) => {
+  client.query('SET client_encoding TO \'UTF8\';');
+});
 
 
 export default pool;

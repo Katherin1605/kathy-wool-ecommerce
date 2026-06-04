@@ -16,12 +16,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//MIDDLEWARE GLOBAL PARA FORZAR UTF-8
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  next();
-});
-
 app.use(productsRoutes);
 app.use(categoriesRoutes);
 app.use("/api", cartRoutes);
