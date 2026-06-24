@@ -103,7 +103,7 @@ const NewProduct = () => {
           >
             +
           </div>
-          <h2 className="fw-bold" style={{ color: '#1a1d2e' }}>Agregar Nuevo Dise�o</h2>
+          <h2 className="fw-bold" style={{ color: '#1a1d2e' }}>Agregar Nuevo Diseño</h2>
           <p className="text-muted">Agrega un nuevo producto a la tienda</p>
         </div>
 
@@ -111,7 +111,7 @@ const NewProduct = () => {
 
           {/* Zona de Carga de Imagen */}
           <div className="mb-4">
-            <label className="form-label fw-semibold text-secondary">Im�genes del Producto</label>
+            <label className="form-label fw-semibold text-secondary">Imágenes del Producto</label>
             <div
               className="position-relative border rounded-3 p-5 text-center bg-white"
               style={{ borderStyle: 'dashed', borderWidth: '2px', borderColor: '#dee2e6' }}
@@ -124,8 +124,8 @@ const NewProduct = () => {
               />
               <div className="text-muted">
                 <span style={{ fontSize: '40px' }}>??</span>
-                <p className="mb-1 fw-medium text-dark">Haz clic para subir im�genes o arrastra aqu�</p>
-                <small>PNG, JPG hasta 10MB (m�ximo 5 im�genes)</small>
+                <p className="mb-1 fw-medium text-dark">Haz clic para subir imágenes o arrastra aquí</p>
+                <small>PNG, JPG hasta 10MB (máximo 5 imágenes)</small>
               </div>
               {previewUrl && (
                 <img src={previewUrl} alt="Preview" className="mt-3 rounded shadow-sm" style={{ maxHeight: '150px' }} />
@@ -133,9 +133,9 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* T�tulo */}
+          {/* Título */}
           <div className="mb-3">
-            <label className="form-label fw-semibold text-secondary">T�tulo del Producto</label>
+            <label className="form-label fw-semibold text-secondary">Título del Producto</label>
             <div className="input-group">
               <span className="input-group-text bg-white border-end-0 text-muted">???</span>
               <input
@@ -149,13 +149,13 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* Categor�a */}
+          {/* Categoría */}
           <div className="mb-3">
-            <label htmlFor="categoryId" className='form-label'>Categoria:</label>
+            <label htmlFor="categoryId" className='form-label'>Categoría:</label>
             <select id="categoryId" className='form-select' value={categoryId} onChange={(e) => {
               setCategoryId(e.target.value);
             }}>
-              <option value="0">Todas las categorias</option>
+              <option value="0">Todas las categorías</option>
               {categories.map((category) => (
                 <option
                   key={category.category_id}
@@ -182,14 +182,14 @@ const NewProduct = () => {
             </div>
           </div>
 
-          {/* Descripci�n */}
+          {/* Descripción */}
           <div className="mb-4">
-            <label className="form-label fw-semibold text-secondary">Descripci�n</label>
+            <label className="form-label fw-semibold text-secondary">Descripción</label>
             <textarea
               name="description"
               className="form-control"
               rows="4"
-              placeholder="Describe tu producto: materiales, tama�o, cuidados, etc."
+              placeholder="Describe tu producto: materiales, tamaño, cuidados, etc."
               onChange={handleInputChange}
             ></textarea>
           </div>
@@ -205,7 +205,7 @@ const NewProduct = () => {
               disabled={loading}
               style={{ backgroundColor: pinkColor, border: 'none' }}
             >
-              {loading ? 'Subiendo...' : 'Agregar Dise�o'}
+              {loading ? 'Subiendo...' : 'Agregar Diseño'}
             </button>
           </div>
 

@@ -101,14 +101,14 @@ body {
 }
 
 .hero {
-    height: 320px;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     background: linear-gradient(rgba(245, 42, 143, 0.6),
             rgba(245, 42, 143, 0.6)),
-        url("https://images.unsplash.com/photo-1618574760076-bae45d84041c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5YXJuJTIwd29vbCUyMGNyYWZ0c3xlbnwxfHx8fDE3NzIwMzY2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080");
+        url("https://res.cloudinary.com/dorfpavlv/image/upload/v1782325744/KATHY_WOOL_JPG-PRINCIPAL_cflgjn.jpg");
 
     background-size: cover;
     background-position: center;

@@ -10,7 +10,8 @@ INSERT INTO categories (name, description) VALUES
 ('personajes', 'Figuras inspiradas en cuentos, películas y literatura'),
 ('sailor moon', 'Colección inspirada en el anime Sailor Moon'),
 ('videojuegos', 'Personajes icónicos del mundo del gaming'),
-('bebe', 'Artículos suaves y seguros para los más pequeños');
+('bebe', 'Artículos suaves y seguros para los más pequeños'),
+('ofertas', 'Productos con descuentos y promociones especiales');
 
 INSERT INTO products (name, category_id, description, price, stock, url_image) VALUES
 ('Atrapasueños', 1, 'Tejido con hilos de serenidad, este atrapasueños promete filtrar tus noches para que solo queden los deseos más dulces.', 4550, 5, 'https://res.cloudinary.com/dorfpavlv/image/upload/v1772981252/atrapasuenos_iuwyjj.jpg'),
