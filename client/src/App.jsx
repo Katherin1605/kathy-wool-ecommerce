@@ -19,6 +19,8 @@ import Home from './pages/Home'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout"
+import CheckoutSuccess from "./pages/CheckoutSuccess"
+import CheckoutFailure from "./pages/CheckoutFailure"
 import ProductDetails from './pages/ProductDetails'
 import Form from "./pages/Form"
 import NotFound from "./pages/NotFound";
@@ -41,6 +43,8 @@ function App() {
             <Route path="/contact" element={<Form />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/checkout/failure" element={<CheckoutFailure />} />
             <Route path="*" element={<NotFound />} />
           </Route>
 
