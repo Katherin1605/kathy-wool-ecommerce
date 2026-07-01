@@ -7,7 +7,6 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react"
 
 // Inicializar el SDK con tu clave pública de pruebas o producción
 initMercadoPago(import.meta.env.VITE_MERCADO_PAGO_PUBLIC_KEY)
-console.log("¿La llave cargó?:", import.meta.env.VITE_MERCADO_PAGO_PUBLIC_KEY)
 
 function Checkout() {
     const { token, user } = useUser()
